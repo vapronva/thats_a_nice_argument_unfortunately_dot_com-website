@@ -1,5 +1,4 @@
 import random
-import subprocess
 from ipaddress import IPv4Address
 
 from faker import Faker

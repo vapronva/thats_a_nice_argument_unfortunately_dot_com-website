@@ -4,6 +4,13 @@ from typing import Optional
 import pydantic
 
 
+class RequestException(Exception):
+    """
+    Request exception.
+    """
+    pass
+
+
 class ErrorResponseModel(pydantic.BaseModel):
     """
     Error response model.

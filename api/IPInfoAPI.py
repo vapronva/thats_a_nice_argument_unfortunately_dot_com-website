@@ -2,6 +2,8 @@ from ipaddress import IPv4Address
 import requests
 import pydantic
 
+from models import RequestException
+
 
 class IPInfoResponse(pydantic.BaseModel):
     """
@@ -61,4 +63,4 @@ class IPInfoAPI:
         if response.status_code == 200:
             return IPInfoResponse(**response.json())
         else:
-            raise Exception("Error: " + response.text)
+            raise RequestException("Error: " + response.text)

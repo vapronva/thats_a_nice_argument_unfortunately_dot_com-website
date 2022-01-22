@@ -2,6 +2,8 @@ from ipaddress import IPv4Address
 import requests
 import pydantic
 
+from models import RequestException
+
 
 class ProxyCheckAnswerModel(pydantic.BaseModel):
     """
@@ -55,8 +57,8 @@ class ProxyCheckAPI:
                     type = data[str(ip)]["type"]
                 )
             else:
-                raise Exception("Error: " + response.text)
-        except Exception as e:
+                raise RequestException("Error: " + response.text)
+        except RequestException as e:
             print(e)
             return ProxyCheckAnswerModel(
                 ip = ip,

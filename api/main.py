@@ -2,6 +2,7 @@ from ipaddress import IPv4Address
 
 from fastapi import FastAPI, Request, Response
 from IPInfoAPI import IPInfoAPI
+from models import RequestException
 from models import (
     BasicResponseModel,
     ErrorResponseModel,
@@ -56,7 +57,7 @@ def main_ip(request: Request,
             result=IPNonsenseResponseModel(
                 user_ip=userIP, final_list=__superBasedInfo.generate(userIP)),
         )
-    except Exception as e:
+    except RequestException as e:
         print(e)
         userIP = IPv4Address(request.client.host)
         response.status_code = 500
