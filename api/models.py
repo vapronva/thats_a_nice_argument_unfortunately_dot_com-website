@@ -5,11 +5,7 @@ import pydantic
 
 
 class RequestException(Exception):
-    """
-    Request exception.
-    """
-
-    pass
+    """Request exception."""
 
 
 class ErrorResponseModel(pydantic.BaseModel):
@@ -55,7 +51,8 @@ class BasicResponseModel(pydantic.BaseModel):
 
     Args:
         error (Optional[ErrorResponseModel]): The error.
-        result (Optional[IPNonsenseResponseModel, IntroMessageResponseModel]): The result.
+        result (Optional[IPNonsenseResponseModel,
+            IntroMessageResponseModel]): The result.
     """
 
     error: Optional[ErrorResponseModel]

@@ -40,7 +40,10 @@ def main_root(response_model=BasicResponseModel):
     return BasicResponseModel(
         error=None,
         result=IntroMessageResponseModel(
-            message="Hello, welcome to thats-a-nice-argument-unfortunatly.com. It's just a joke, nothing serious. Although, if you do have any questions, please e-mail me: contact at vapronva.pw. Thanks for visiting!"
+            message="Hello, welcome to thats-a-nice-argument-unfortunatly.com. \
+It's just a joke, nothing serious. Although, if you do have any \
+questions, please e-mail me: contact at vapronva.pw. \
+Thanks for visiting!"
         ),
     )
 
@@ -49,6 +52,17 @@ def main_root(response_model=BasicResponseModel):
 def main_ip(request: Request,
             response: Response,
             response_model=BasicResponseModel):
+    """
+    Spit out the information about the requester's IP address.
+
+    Args:
+        request (Request): Request object.
+        response (Response): Response object.
+        response_model ([type], optional). Defaults to BasicResponseModel.
+
+    Returns:
+        BasicResponseModel: The information about the requester's IP address.
+    """
     try:
         userIP = IPv4Address(request.client.host)
         userIP = IPv4Address("93.92.199.194")

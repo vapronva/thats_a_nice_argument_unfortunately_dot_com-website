@@ -21,9 +21,7 @@ class ProxyCheckAnswerModel(pydantic.BaseModel):
 
 
 class ProxyCheckAPI:
-    """
-    Proxy check API model.
-    """
+    """Proxy check API."""
 
     def __init__(self, apiKey: str):
         """
@@ -56,8 +54,7 @@ class ProxyCheckAPI:
                 return ProxyCheckAnswerModel(ip=ip,
                                              proxy=data[str(ip)]["proxy"],
                                              type=data[str(ip)]["type"])
-            else:
-                raise RequestException("Error: " + response.text)
+            raise RequestException("Error: " + response.text)
         except RequestException as e:
             print(e)
             return ProxyCheckAnswerModel(ip=ip, proxy="no", type="Regular")

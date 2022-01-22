@@ -33,9 +33,7 @@ class IPInfoResponse(pydantic.BaseModel):
 
 
 class IPInfoAPI:
-    """
-    IPInfo API.
-    """
+    """IPInfo API."""
 
     def __init__(self, apiKey: str):
         """
@@ -64,5 +62,4 @@ class IPInfoAPI:
         response = requests.get(url)
         if response.status_code == 200:
             return IPInfoResponse(**response.json())
-        else:
-            raise RequestException("Error: " + response.text)
+        raise RequestException("Error: " + response.text)

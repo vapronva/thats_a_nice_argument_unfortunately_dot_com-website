@@ -10,9 +10,7 @@ from ProxyCheckAPI import ProxyCheckAnswerModel, ProxyCheckAPI
 
 
 class NonsenseIPInformationGenerator:
-    """
-    Get random information about the given IP!
-    """
+    """Get random information about the given IP!"""
 
     def __init__(self, iia: IPInfoAPI, pca: ProxyCheckAPI) -> None:
         """
@@ -130,7 +128,17 @@ class NonsenseIPInformationGenerator:
         Returns:
             str: The port forwarding connection string.
         """
-        return f"[{random.choice(['HTTP', 'TCP', 'UDP'])}] {self.__faker.ipv4_private(address_class='c')}:{self.__faker.port_number(is_system=self.__faker.boolean(), is_user=self.__faker.boolean(), is_dynamic=self.__faker.boolean())} => {self.__faker.ipv4_private(address_class='c')}:{self.__faker.port_number(is_system=self.__faker.boolean(), is_user=self.__faker.boolean(), is_dynamic=self.__faker.boolean())}"
+        return f"""[{random.choice(['HTTP', 'TCP', 'UDP'])}] \
+{self.__faker.ipv4_private(address_class='c')}:\
+{self.__faker.port_number(
+    is_system=self.__faker.boolean(),
+    is_user=self.__faker.boolean(),
+    is_dynamic=self.__faker.boolean())} => \
+{self.__faker.ipv4_private(address_class='c')}:\
+{self.__faker.port_number(
+    is_system=self.__faker.boolean(),
+    is_user=self.__faker.boolean(),
+    is_dynamic=self.__faker.boolean())}"""
 
     def generate(self, userIP: IPv4Address) -> list:
         """
@@ -164,11 +172,11 @@ class NonsenseIPInformationGenerator:
             "SUBNET MASK: 255.255.255.0",
             "UDP OPEN PORTS: " + ", ".join([
                 str(self.__faker.port_number(is_user=True))
-                for i in range(random.randint(2, 4))
+                for _ in range(random.randint(2, 4))
             ]),
             "TCP OPEN PORTS: " + ", ".join([
                 str(self.__faker.port_number(is_system=True))
-                for i in range(random.randint(1, 3))
+                for _ in range(random.randint(1, 3))
             ]),
             f"ROUTER VENDOR: {self.getRandomCompanyRouterName()}",
             f"DEVICE VENDOR: {self.getRandomDeviceVendorCompany()}",
@@ -192,9 +200,8 @@ class NonsenseIPInformationGenerator:
         for _ in range(ayoNumberOfHops):
             if self.__faker.boolean():
                 bllngrr.append(
-                    str(
-                        self.__faker.ipv4_private(address_class="a" if self.
-                                                  __faker.boolean() else "b")))
+                    str(self.__faker.ipv4_private(
+                        address_class="a" if self.__faker.boolean() else "b")))
             else:
                 bllngrr.append(str(self.__faker.hostname()))
         bllngrr.append(f"TOTAL HOPS: {ayoNumberOfHops}")
