@@ -1,7 +1,7 @@
 from ipaddress import IPv4Address
-import requests
-import pydantic
 
+import pydantic
+import requests
 from models import RequestException
 
 
@@ -20,6 +20,7 @@ class IPInfoResponse(pydantic.BaseModel):
         postal (str): The postal code.
         timezone (str): The timezone.
     """
+
     ip: IPv4Address
     hostname: str
     city: str
@@ -35,6 +36,7 @@ class IPInfoAPI:
     """
     IPInfo API.
     """
+
     def __init__(self, apiKey: str):
         """
         Initialize the API.
