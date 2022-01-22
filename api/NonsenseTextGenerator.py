@@ -31,17 +31,6 @@ class NonsenseIPInformationGenerator:
         self.__faker.add_provider(faker_ssn)
 
     @staticmethod
-    def socialSecurityNumberGenerator() -> str:
-        """
-        Generate a random social security number.
-
-        Returns:
-            str: Social security number.
-        """
-        cmdp = subprocess.check_output("bash valid_ssn.sh", shell=True)
-        return str(cmdp.decode("utf-8")).replace("\n", "")
-
-    @staticmethod
     def getRandomDNSProvider() -> str:
         """
         Get a random DNS provider.
@@ -81,7 +70,7 @@ class NonsenseIPInformationGenerator:
                       "Sony", "Apple", "Lenovo", "Dell", "HP", "Acer", "Asus", "Samsung"]
         return random.choice(_companies)
 
-    def generateRandomPortForwardingConnectionsLikeMKT(self, ip: IPv4Address) -> str:
+    def generateRandomPortForwardingConnectionsLikeMKT(self) -> str:
         """
         Generate a random port forwarding connection.
 
@@ -144,8 +133,8 @@ class NonsenseIPInformationGenerator:
             else:
                 bllngrr.append(str(self.__faker.hostname()))
         bllngrr.append(f"TOTAL HOPS: {ayoNumberOfHops}")
-        [bllngrr.append(self.generateRandomPortForwardingConnectionsLikeMKT(userIP))
-            for _ in range(random.randint(6,9))]
+        for _ in range(random.randint(6,9)):
+            bllngrr.append(self.generateRandomPortForwardingConnectionsLikeMKT())
         bllngrr.append(f"EXTERNAL MAC: {self.__faker.mac_address()}")
         bllngrr.append("MODEM JUMPS: 64")
         return bllngrr

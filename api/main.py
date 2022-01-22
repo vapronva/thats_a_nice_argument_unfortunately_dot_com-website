@@ -1,8 +1,9 @@
+from ipaddress import IPv4Address
 from fastapi import FastAPI, Request, Response
 from IPInfoAPI import IPInfoAPI
 from ProxyCheckAPI import ProxyCheckAPI
 from NonsenseTextGenerator import NonsenseIPInformationGenerator
-from models import *
+from models import BasicResponseModel, IntroMessageResponseModel, IPNonsenseResponseModel, ErrorResponseModel
 
 
 # Create the FastAPI application
@@ -41,7 +42,7 @@ def main_root(response_model=BasicResponseModel):
 @app.get("/ip")
 def main_ip(request: Request, response: Response, response_model=BasicResponseModel):
     try:
-        # userIP = IPv4Address(request.client.host)
+        userIP = IPv4Address(request.client.host)
         userIP = IPv4Address("93.92.199.194")
         return BasicResponseModel(
             error=None,
