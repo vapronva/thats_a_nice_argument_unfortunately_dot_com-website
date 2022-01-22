@@ -2,12 +2,12 @@ from ipaddress import IPv4Address
 
 from fastapi import FastAPI, Request, Response
 from IPInfoAPI import IPInfoAPI
-from models import RequestException
 from models import (
     BasicResponseModel,
     ErrorResponseModel,
     IntroMessageResponseModel,
     IPNonsenseResponseModel,
+    RequestException,
 )
 from NonsenseTextGenerator import NonsenseIPInformationGenerator
 from ProxyCheckAPI import ProxyCheckAPI
