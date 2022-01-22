@@ -145,38 +145,16 @@ class NonsenseIPInformationGenerator:
         Faker.seed(random.randint(0, 100000))
         ipinfo: IPInfoResponse = self.__iia.getInfo(userIP)
         proxycheck: ProxyCheckAnswerModel = self.__pca.getInfo(userIP)
-        bllngrr = []
-        bllngrr.append(f"IP: {ipinfo.ip}")
-        bllngrr.append("N: " + str(ipinfo.loc.split(",")[0]))
-        bllngrr.append("W: " + str(ipinfo.loc.split(",")[1]))
-        bllngrr.append(f"SS Number: {self.__faker.ssn()}")
-        bllngrr.append(f"IPv6: {self.__faker.ipv6()}")
-        bllngrr.append(
-            f"UPNP: {'Enabled' if self.__faker.boolean() else 'Disabled'}")
-        bllngrr.append("DMZ: " +
-                       str(self.__faker.ipv4_private(address_class="b")))
-        bllngrr.append(f"MAC: {self.__faker.mac_address()}")
-        bllngrr.append(f"ISP: {ipinfo.org}")
-        bllngrr.append(f"DNS: {self.getRandomDNSProvider()}")
-        bllngrr.append(f"ALT DNS: {self.getRandomDNSProvider()}")
-        bllngrr.append(f"DNS SUFFIX: {self.__faker.company()}")
-        bllngrr.append("WAN: " +
-                       str(self.__faker.ipv4_private(address_class="a")))
-        bllngrr.append(f"WAN TYPE: {proxycheck.type}")
-        bllngrr.append("GATEWAY: " +
-                       str(self.__faker.ipv4_private(address_class="c")))
-        bllngrr.append("SUBNET MASK: 255.255.255.0")
-        bllngrr.append("UDP OPEN PORTS: " + ", ".join([
+        bllngrr = [f"IP: {ipinfo.ip}", "N: " + str(ipinfo.loc.split(",")[0]), "W: " + str(ipinfo.loc.split(",")[1]), f"SS Number: {self.__faker.ssn()}", f"IPv6: {self.__faker.ipv6()}", f"UPNP: {'Enabled' if self.__faker.boolean() else 'Disabled'}", "DMZ: " +
+                       str(self.__faker.ipv4_private(address_class="b")), f"MAC: {self.__faker.mac_address()}", f"ISP: {ipinfo.org}", f"DNS: {self.getRandomDNSProvider()}", f"ALT DNS: {self.getRandomDNSProvider()}", f"DNS SUFFIX: {self.__faker.company()}", "WAN: " +
+                       str(self.__faker.ipv4_private(address_class="a")), f"WAN TYPE: {proxycheck.type}", "GATEWAY: " +
+                       str(self.__faker.ipv4_private(address_class="c")), "SUBNET MASK: 255.255.255.0", "UDP OPEN PORTS: " + ", ".join([
             str(self.__faker.port_number(is_user=True))
             for i in range(random.randint(2, 4))
-        ]))
-        bllngrr.append("TCP OPEN PORTS: " + ", ".join([
+        ]), "TCP OPEN PORTS: " + ", ".join([
             str(self.__faker.port_number(is_system=True))
             for i in range(random.randint(1, 3))
-        ]))
-        bllngrr.append(f"ROUTER VENDOR: {self.getRandomCompanyRouterName()}")
-        bllngrr.append(f"DEVICE VENDOR: {self.getRandomDeviceVendorCompany()}")
-        bllngrr.append("CONNECTION TYPE: " + str(
+        ]), f"ROUTER VENDOR: {self.getRandomCompanyRouterName()}", f"DEVICE VENDOR: {self.getRandomDeviceVendorCompany()}", "CONNECTION TYPE: " + str(
             self.__faker.random_element(elements=[
                 "PPTP",
                 "L2TP",
@@ -189,8 +167,7 @@ class NonsenseIPInformationGenerator:
                 "DNS-DHCP",
                 "DNS-Static",
                 "DNS-Dynamic",
-            ])))
-        bllngrr.append("ICMP HOPS:")
+            ])), "ICMP HOPS:"]
         ayoNumberOfHops = random.randint(5, 9)
         for _ in range(ayoNumberOfHops):
             if self.__faker.boolean():
