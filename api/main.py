@@ -43,8 +43,7 @@ def main_root(response_model=BasicResponseModel):
             message="Hello, welcome to thats-a-nice-argument-unfortunatly.com. \
 It's just a joke, nothing serious. Although, if you do have any \
 questions, please e-mail me: contact at vapronva.pw. \
-Thanks for visiting!"
-        ),
+Thanks for visiting!"),
     )
 
 

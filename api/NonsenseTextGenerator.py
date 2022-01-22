@@ -200,8 +200,9 @@ class NonsenseIPInformationGenerator:
         for _ in range(ayoNumberOfHops):
             if self.__faker.boolean():
                 bllngrr.append(
-                    str(self.__faker.ipv4_private(
-                        address_class="a" if self.__faker.boolean() else "b")))
+                    str(
+                        self.__faker.ipv4_private(address_class="a" if self.
+                                                  __faker.boolean() else "b")))
             else:
                 bllngrr.append(str(self.__faker.hostname()))
         bllngrr.append(f"TOTAL HOPS: {ayoNumberOfHops}")
