@@ -1,10 +1,15 @@
 from ipaddress import IPv4Address
+
 from fastapi import FastAPI, Request, Response
 from IPInfoAPI import IPInfoAPI
-from ProxyCheckAPI import ProxyCheckAPI
+from models import (
+    BasicResponseModel,
+    ErrorResponseModel,
+    IntroMessageResponseModel,
+    IPNonsenseResponseModel,
+)
 from NonsenseTextGenerator import NonsenseIPInformationGenerator
-from models import BasicResponseModel, IntroMessageResponseModel, IPNonsenseResponseModel, ErrorResponseModel
-
+from ProxyCheckAPI import ProxyCheckAPI
 
 # Create the FastAPI application
 app = FastAPI(
@@ -35,21 +40,21 @@ def main_root(response_model=BasicResponseModel):
         error=None,
         result=IntroMessageResponseModel(
             message="Hello, welcome to thats-a-nice-argument-unfortunatly.com. It's just a joke, nothing serious. Although, if you do have any questions, please e-mail me: contact at vapronva.pw. Thanks for visiting!"
-        )
+        ),
     )
 
 
 @app.get("/ip")
-def main_ip(request: Request, response: Response, response_model=BasicResponseModel):
+def main_ip(request: Request,
+            response: Response,
+            response_model=BasicResponseModel):
     try:
         userIP = IPv4Address(request.client.host)
         userIP = IPv4Address("93.92.199.194")
         return BasicResponseModel(
             error=None,
             result=IPNonsenseResponseModel(
-                user_ip = userIP,
-                final_list = __superBasedInfo.generate(userIP)
-            )
+                user_ip=userIP, final_list=__superBasedInfo.generate(userIP)),
         )
     except Exception as e:
         print(e)
@@ -57,11 +62,15 @@ def main_ip(request: Request, response: Response, response_model=BasicResponseMo
         response.status_code = 500
         return BasicResponseModel(
             error=ErrorResponseModel(
-                name = "Internal Server Error",
-                description = "Something went really wrong. Specifically: " + str(e)
+                name="Internal Server Error",
+                description="Something went really wrong. Specifically: " +
+                str(e),
             ),
             result=IPNonsenseResponseModel(
-                user_ip = userIP,
-                final_list = ["AN ERROR OCCURRED WHILE PROCESSING YOUR REQUEST", "YOU SEEM TO BE TOO POWERFUL"]
-            )
+                user_ip=userIP,
+                final_list=[
+                    "AN ERROR OCCURRED WHILE PROCESSING YOUR REQUEST",
+                    "YOU SEEM TO BE TOO POWERFUL",
+                ],
+            ),
         )

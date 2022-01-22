@@ -1,13 +1,13 @@
-from ipaddress import IPv4Address
 import random
-from IPInfoAPI import IPInfoResponse
-from IPInfoAPI import IPInfoAPI
-from faker import Faker
-from faker.providers import internet as faker_internet
-from faker.providers import company as faker_company
-from faker.providers import ssn as faker_ssn
 import subprocess
-from ProxyCheckAPI import ProxyCheckAPI, ProxyCheckAnswerModel
+from ipaddress import IPv4Address
+
+from faker import Faker
+from faker.providers import company as faker_company
+from faker.providers import internet as faker_internet
+from faker.providers import ssn as faker_ssn
+from IPInfoAPI import IPInfoAPI, IPInfoResponse
+from ProxyCheckAPI import ProxyCheckAnswerModel, ProxyCheckAPI
 
 
 class NonsenseIPInformationGenerator:
@@ -38,10 +38,23 @@ class NonsenseIPInformationGenerator:
         Returns:
             str: IP address of the DNS provider.
         """
-        _dnsproviders = ["1.1.1.1", "9.9.9.9", "8.8.8.8", "45.90.28.100", "45.90.30.100",
-                         "208.67.222.222", "208.67.220.220", "64.6.64.6", "64.6.65.6",
-                         "195.46.39.39", "195.46.39.40", "8.26.56.26", "8.20.247.20",
-                         "77.88.8.8", "77.88.8.1"]
+        _dnsproviders = [
+            "1.1.1.1",
+            "9.9.9.9",
+            "8.8.8.8",
+            "45.90.28.100",
+            "45.90.30.100",
+            "208.67.222.222",
+            "208.67.220.220",
+            "64.6.64.6",
+            "64.6.65.6",
+            "195.46.39.39",
+            "195.46.39.40",
+            "8.26.56.26",
+            "8.20.247.20",
+            "77.88.8.8",
+            "77.88.8.1",
+        ]
         return random.choice(_dnsproviders)
 
     @staticmethod
@@ -52,9 +65,25 @@ class NonsenseIPInformationGenerator:
         Returns:
             str: Router's company name.
         """
-        _companies = ["TP-Link", "Xiaomi", "Netgear", "MikroTik", "Netgate",
-                      "Cisco", "Linksys", "Fortinet", "ASUS", "Tenda", "Netis",
-                      "SonicWall", "Apple", "ECPN", "GL.iNet", "Ubiquiti", "Huawei"]
+        _companies = [
+            "TP-Link",
+            "Xiaomi",
+            "Netgear",
+            "MikroTik",
+            "Netgate",
+            "Cisco",
+            "Linksys",
+            "Fortinet",
+            "ASUS",
+            "Tenda",
+            "Netis",
+            "SonicWall",
+            "Apple",
+            "ECPN",
+            "GL.iNet",
+            "Ubiquiti",
+            "Huawei",
+        ]
         return random.choice(_companies)
 
     @staticmethod
@@ -65,9 +94,31 @@ class NonsenseIPInformationGenerator:
         Returns:
             str: Device vendor company.
         """
-        _companies = ["Apple", "Lenovo", "Dell", "HP", "Acer", "Asus", "Samsung", "Toshiba",
-                      "Nintendo", "Sony", "Microsoft", "Intel", "AMD", "IBM", "Oracle",
-                      "Sony", "Apple", "Lenovo", "Dell", "HP", "Acer", "Asus", "Samsung"]
+        _companies = [
+            "Apple",
+            "Lenovo",
+            "Dell",
+            "HP",
+            "Acer",
+            "Asus",
+            "Samsung",
+            "Toshiba",
+            "Nintendo",
+            "Sony",
+            "Microsoft",
+            "Intel",
+            "AMD",
+            "IBM",
+            "Oracle",
+            "Sony",
+            "Apple",
+            "Lenovo",
+            "Dell",
+            "HP",
+            "Acer",
+            "Asus",
+            "Samsung",
+        ]
         return random.choice(_companies)
 
     def generateRandomPortForwardingConnectionsLikeMKT(self) -> str:
@@ -101,40 +152,59 @@ class NonsenseIPInformationGenerator:
         bllngrr.append("W: " + str(ipinfo.loc.split(",")[1]))
         bllngrr.append(f"SS Number: {self.__faker.ssn()}")
         bllngrr.append(f"IPv6: {self.__faker.ipv6()}")
-        bllngrr.append(f"UPNP: {'Enabled' if self.__faker.boolean() else 'Disabled'}")
-        bllngrr.append("DMZ: " + str(self.__faker.ipv4_private(address_class="b")))
+        bllngrr.append(
+            f"UPNP: {'Enabled' if self.__faker.boolean() else 'Disabled'}")
+        bllngrr.append("DMZ: " +
+                       str(self.__faker.ipv4_private(address_class="b")))
         bllngrr.append(f"MAC: {self.__faker.mac_address()}")
         bllngrr.append(f"ISP: {ipinfo.org}")
         bllngrr.append(f"DNS: {self.getRandomDNSProvider()}")
         bllngrr.append(f"ALT DNS: {self.getRandomDNSProvider()}")
         bllngrr.append(f"DNS SUFFIX: {self.__faker.company()}")
-        bllngrr.append("WAN: " + str(self.__faker.ipv4_private(address_class="a")))
+        bllngrr.append("WAN: " +
+                       str(self.__faker.ipv4_private(address_class="a")))
         bllngrr.append(f"WAN TYPE: {proxycheck.type}")
-        bllngrr.append("GATEWAY: " + str(self.__faker.ipv4_private(address_class="c")))
+        bllngrr.append("GATEWAY: " +
+                       str(self.__faker.ipv4_private(address_class="c")))
         bllngrr.append("SUBNET MASK: 255.255.255.0")
-        bllngrr.append("UDP OPEN PORTS: " + ", ".join(
-            [str(self.__faker.port_number(is_user=True)) for i in range(
-                random.randint(2,4))]))
-        bllngrr.append("TCP OPEN PORTS: " + ", ".join(
-            [str(self.__faker.port_number(is_system=True)) for i in range(
-                random.randint(1,3))]))
+        bllngrr.append("UDP OPEN PORTS: " + ", ".join([
+            str(self.__faker.port_number(is_user=True))
+            for i in range(random.randint(2, 4))
+        ]))
+        bllngrr.append("TCP OPEN PORTS: " + ", ".join([
+            str(self.__faker.port_number(is_system=True))
+            for i in range(random.randint(1, 3))
+        ]))
         bllngrr.append(f"ROUTER VENDOR: {self.getRandomCompanyRouterName()}")
         bllngrr.append(f"DEVICE VENDOR: {self.getRandomDeviceVendorCompany()}")
         bllngrr.append("CONNECTION TYPE: " + str(
             self.__faker.random_element(elements=[
-                "PPTP", "L2TP", "PPPoE", "PPPoA", "DHCP", "Static", "Dynamic", "DNS",
-                "DNS-DHCP", "DNS-Static", "DNS-Dynamic"])))
+                "PPTP",
+                "L2TP",
+                "PPPoE",
+                "PPPoA",
+                "DHCP",
+                "Static",
+                "Dynamic",
+                "DNS",
+                "DNS-DHCP",
+                "DNS-Static",
+                "DNS-Dynamic",
+            ])))
         bllngrr.append("ICMP HOPS:")
-        ayoNumberOfHops = random.randint(5,9)
+        ayoNumberOfHops = random.randint(5, 9)
         for _ in range(ayoNumberOfHops):
             if self.__faker.boolean():
-                bllngrr.append(str(self.__faker.ipv4_private(
-                    address_class="a" if self.__faker.boolean() else "b")))
+                bllngrr.append(
+                    str(
+                        self.__faker.ipv4_private(address_class="a" if self.
+                                                  __faker.boolean() else "b")))
             else:
                 bllngrr.append(str(self.__faker.hostname()))
         bllngrr.append(f"TOTAL HOPS: {ayoNumberOfHops}")
-        for _ in range(random.randint(6,9)):
-            bllngrr.append(self.generateRandomPortForwardingConnectionsLikeMKT())
+        for _ in range(random.randint(6, 9)):
+            bllngrr.append(
+                self.generateRandomPortForwardingConnectionsLikeMKT())
         bllngrr.append(f"EXTERNAL MAC: {self.__faker.mac_address()}")
         bllngrr.append("MODEM JUMPS: 64")
         return bllngrr
