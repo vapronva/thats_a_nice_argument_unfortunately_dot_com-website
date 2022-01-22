@@ -145,29 +145,49 @@ class NonsenseIPInformationGenerator:
         Faker.seed(random.randint(0, 100000))
         ipinfo: IPInfoResponse = self.__iia.getInfo(userIP)
         proxycheck: ProxyCheckAnswerModel = self.__pca.getInfo(userIP)
-        bllngrr = [f"IP: {ipinfo.ip}", "N: " + str(ipinfo.loc.split(",")[0]), "W: " + str(ipinfo.loc.split(",")[1]), f"SS Number: {self.__faker.ssn()}", f"IPv6: {self.__faker.ipv6()}", f"UPNP: {'Enabled' if self.__faker.boolean() else 'Disabled'}", "DMZ: " +
-                       str(self.__faker.ipv4_private(address_class="b")), f"MAC: {self.__faker.mac_address()}", f"ISP: {ipinfo.org}", f"DNS: {self.getRandomDNSProvider()}", f"ALT DNS: {self.getRandomDNSProvider()}", f"DNS SUFFIX: {self.__faker.company()}", "WAN: " +
-                       str(self.__faker.ipv4_private(address_class="a")), f"WAN TYPE: {proxycheck.type}", "GATEWAY: " +
-                       str(self.__faker.ipv4_private(address_class="c")), "SUBNET MASK: 255.255.255.0", "UDP OPEN PORTS: " + ", ".join([
-            str(self.__faker.port_number(is_user=True))
-            for i in range(random.randint(2, 4))
-        ]), "TCP OPEN PORTS: " + ", ".join([
-            str(self.__faker.port_number(is_system=True))
-            for i in range(random.randint(1, 3))
-        ]), f"ROUTER VENDOR: {self.getRandomCompanyRouterName()}", f"DEVICE VENDOR: {self.getRandomDeviceVendorCompany()}", "CONNECTION TYPE: " + str(
-            self.__faker.random_element(elements=[
-                "PPTP",
-                "L2TP",
-                "PPPoE",
-                "PPPoA",
-                "DHCP",
-                "Static",
-                "Dynamic",
-                "DNS",
-                "DNS-DHCP",
-                "DNS-Static",
-                "DNS-Dynamic",
-            ])), "ICMP HOPS:"]
+        bllngrr = [
+            f"IP: {ipinfo.ip}",
+            "N: " + str(ipinfo.loc.split(",")[0]),
+            "W: " + str(ipinfo.loc.split(",")[1]),
+            f"SS Number: {self.__faker.ssn()}",
+            f"IPv6: {self.__faker.ipv6()}",
+            f"UPNP: {'Enabled' if self.__faker.boolean() else 'Disabled'}",
+            "DMZ: " + str(self.__faker.ipv4_private(address_class="b")),
+            f"MAC: {self.__faker.mac_address()}",
+            f"ISP: {ipinfo.org}",
+            f"DNS: {self.getRandomDNSProvider()}",
+            f"ALT DNS: {self.getRandomDNSProvider()}",
+            f"DNS SUFFIX: {self.__faker.company()}",
+            "WAN: " + str(self.__faker.ipv4_private(address_class="a")),
+            f"WAN TYPE: {proxycheck.type}",
+            "GATEWAY: " + str(self.__faker.ipv4_private(address_class="c")),
+            "SUBNET MASK: 255.255.255.0",
+            "UDP OPEN PORTS: " + ", ".join([
+                str(self.__faker.port_number(is_user=True))
+                for i in range(random.randint(2, 4))
+            ]),
+            "TCP OPEN PORTS: " + ", ".join([
+                str(self.__faker.port_number(is_system=True))
+                for i in range(random.randint(1, 3))
+            ]),
+            f"ROUTER VENDOR: {self.getRandomCompanyRouterName()}",
+            f"DEVICE VENDOR: {self.getRandomDeviceVendorCompany()}",
+            "CONNECTION TYPE: " + str(
+                self.__faker.random_element(elements=[
+                    "PPTP",
+                    "L2TP",
+                    "PPPoE",
+                    "PPPoA",
+                    "DHCP",
+                    "Static",
+                    "Dynamic",
+                    "DNS",
+                    "DNS-DHCP",
+                    "DNS-Static",
+                    "DNS-Dynamic",
+                ])),
+            "ICMP HOPS:",
+        ]
         ayoNumberOfHops = random.randint(5, 9)
         for _ in range(ayoNumberOfHops):
             if self.__faker.boolean():
