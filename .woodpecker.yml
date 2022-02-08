@@ -4,7 +4,7 @@ pipeline:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     commands:
-      - /bin/bash build.sh
+      - CI_COMMIT_SHA=${CI_COMMIT_SHA} /bin/bash build.sh
     secrets:
       - IPINFO_API_KEY
       - PROXYCHECK_API_KEY
