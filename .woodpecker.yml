@@ -10,3 +10,4 @@ pipeline:
       - PROXYCHECK_API_KEY
     when:
       branch: main
+      event: tag
