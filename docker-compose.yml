@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  api:
+    build:
+      context: api/
+      dockerfile: Dockerfile
+    image: thats-a-nice-argument-unfortunately-dot-com-api:latest
+    container_name: "web_api-thats-a-nice-argument-unfortunately-dot-com"
+    environment:
+      - IPINFO_API_KEY=${IPINFO_API_KEY}
+      - PROXYCHECK_API_KEY=${PROXYCHECK_API_KEY}
+    ports:
+      - 6015:8000

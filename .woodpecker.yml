@@ -1,0 +1,12 @@
+pipeline:
+  publish-docker:
+    image: devforth/drone-builder
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    commands:
+      - /bin/bash build.sh
+    secrets:
+      - IPINFO_API_KEY
+      - PROXYCHECK_API_KEY
+    when:
+      branch: main
