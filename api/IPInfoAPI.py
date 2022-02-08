@@ -61,5 +61,8 @@ class IPInfoAPI:
         url = self.baseURL + str(ip) + "/json?token=" + self.__apiKey
         response = requests.get(url)
         if response.status_code == 200:
-            return IPInfoResponse(**response.json())
+            try:
+                return IPInfoResponse(**response.json())
+            except pydantic.error_wrappers.ValidationError:
+                raise RequestException("Error: " + response.text)
         raise RequestException("Error: " + response.text)

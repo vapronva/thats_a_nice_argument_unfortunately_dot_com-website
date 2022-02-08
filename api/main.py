@@ -1,6 +1,9 @@
+from distutils.log import debug
 from ipaddress import IPv4Address
+import os
 
 from fastapi import FastAPI, Request, Response
+import uvicorn
 from IPInfoAPI import IPInfoAPI
 from models import (
     BasicResponseModel,
@@ -17,12 +20,14 @@ app = FastAPI(
     debug=True,
     title="that's a nice argument unfortunatly dot com",
     description="display almost nonsensical information about requester's ip address",
-    version="0.1.0",
+    version="0.3.1",
+    redoc_url=None,
+    docs_url=None
 )
 
 # Intialize the IPInfoAPI and ProxyCheckAPI
-__ipInfoAPI: IPInfoAPI = IPInfoAPI("7a8fa0d48b8c12")
-__proxyCheckAPI: ProxyCheckAPI = ProxyCheckAPI("g17958-o519z8-395z83-82212d")
+__ipInfoAPI: IPInfoAPI = IPInfoAPI(os.getenv("IPINFO_API_KEY"))
+__proxyCheckAPI: ProxyCheckAPI = ProxyCheckAPI(os.getenv("PROXYCHECK_API_KEY"))
 
 # Create the NonsenseIPInformationGenerator
 __superBasedInfo = NonsenseIPInformationGenerator(__ipInfoAPI, __proxyCheckAPI)
@@ -64,7 +69,6 @@ def main_ip(request: Request,
     """
     try:
         userIP = IPv4Address(request.client.host)
-        userIP = IPv4Address("93.92.199.194")
         return BasicResponseModel(
             error=None,
             result=IPNonsenseResponseModel(
@@ -88,3 +92,7 @@ def main_ip(request: Request,
                 ],
             ),
         )
+
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, log_level="info", debug=False)
