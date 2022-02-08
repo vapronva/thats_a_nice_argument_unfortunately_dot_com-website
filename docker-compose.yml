@@ -2,7 +2,7 @@ version: "3"
 
 services:
   api:
-    image: thats-a-nice-argument-unfortunately-dot-com-api:latest
+    image: thats-a-nice-argument-unfortunately-dot-com-api:${CI_COMMIT_SHA}
     container_name: "web_api-thats-a-nice-argument-unfortunately-dot-com"
     environment:
       - IPINFO_API_KEY=${IPINFO_API_KEY}
