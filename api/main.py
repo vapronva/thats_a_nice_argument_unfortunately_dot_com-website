@@ -67,11 +67,9 @@ def main_ip(request: Request,
     Returns:
         BasicResponseModel: The information about the requester's IP address.
     """
-    print("!!!", request.headers.get("X-Forwarded-For"))
-    print("!!!", request.headers.get("X-Forwarded-Host"))
     try:
         # userIP = IPv4Address(request.client.host)
-        userIP = IPv4Address(request.headers.get("X-Forwarded-Host"))
+        userIP = IPv4Address(request.headers.get("X-Forwarded-For"))
         return BasicResponseModel(
             error=None,
             result=IPNonsenseResponseModel(
