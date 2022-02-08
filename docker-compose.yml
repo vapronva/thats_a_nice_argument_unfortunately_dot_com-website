@@ -4,7 +4,7 @@ services:
   api:
     build:
       context: api/
-      dockerfile: Dockerfile
+      dockerfile: api/Dockerfile
     image: thats-a-nice-argument-unfortunately-dot-com-api:latest
     container_name: "web_api-thats-a-nice-argument-unfortunately-dot-com"
     environment:
