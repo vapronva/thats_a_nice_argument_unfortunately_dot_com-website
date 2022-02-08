@@ -77,7 +77,7 @@ def main_ip(request: Request,
         )
     except RequestException as e:
         print(e)
-        userIP = IPv4Address(request.headers.get("X-Forwarded-Host"))
+        userIP = IPv4Address(request.headers.get("X-Forwarded-For"))
         response.status_code = 500
         return BasicResponseModel(
             error=ErrorResponseModel(
