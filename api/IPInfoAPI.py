@@ -22,14 +22,14 @@ class IPInfoResponse(pydantic.BaseModel):
     """
 
     ip: IPv4Address
-    hostname: str
-    city: str
-    region: str
-    country: str
-    loc: str
-    org: str
-    postal: str
-    timezone: str
+    hostname: str = ""
+    city: str = ""
+    region: str = ""
+    country: str = ""
+    loc: str = "49.2497,-123.1193"
+    org: str = ""
+    postal: str = ""
+    timezone: str = ""
 
 
 class IPInfoAPI:
