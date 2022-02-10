@@ -1,9 +1,9 @@
-from distutils.log import debug
-from ipaddress import IPv4Address, AddressValueError
 import os
+from distutils.log import debug
+from ipaddress import AddressValueError, IPv4Address
 
-from fastapi import FastAPI, Request, Response
 import uvicorn
+from fastapi import FastAPI, Request, Response
 from IPInfoAPI import IPInfoAPI
 from models import (
     BasicResponseModel,
@@ -22,7 +22,7 @@ app = FastAPI(
     description="display almost nonsensical information about requester's ip address",
     version="0.3.1",
     redoc_url=None,
-    docs_url=None
+    docs_url=None,
 )
 
 # Intialize the IPInfoAPI and ProxyCheckAPI
@@ -53,10 +53,12 @@ Thanks for visiting!"),
 
 
 @app.get("/ip")
-def main_ip(request: Request,
-            response: Response,
-            response_model = BasicResponseModel,
-            disableICMPhopsInfo: bool = False):
+def main_ip(
+    request: Request,
+    response: Response,
+    response_model=BasicResponseModel,
+    disableICMPhopsInfo: bool = False,
+):
     """
     Spit out the information about the requester's IP address.
 
@@ -74,7 +76,8 @@ def main_ip(request: Request,
         try:
             userIP = IPv4Address(request.headers.get("X-Forwarded-For"))
         except AddressValueError:
-            userIP = IPv4Address(request.headers.get("X-Forwarded-For").split(", ")[0])
+            userIP = IPv4Address(
+                request.headers.get("X-Forwarded-For").split(", ")[0])
         return BasicResponseModel(
             error=None,
             result=IPNonsenseResponseModel(
@@ -85,7 +88,8 @@ def main_ip(request: Request,
         try:
             userIP = IPv4Address(request.headers.get("X-Forwarded-For"))
         except AddressValueError:
-            userIP = IPv4Address(request.headers.get("X-Forwarded-For").split(", ")[0])
+            userIP = IPv4Address(
+                request.headers.get("X-Forwarded-For").split(", ")[0])
         response.status_code = 500
         return BasicResponseModel(
             error=ErrorResponseModel(
@@ -104,4 +108,8 @@ def main_ip(request: Request,
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, log_level="info", debug=False)
+    uvicorn.run("main:app",
+                host="0.0.0.0",
+                port=8000,
+                log_level="info",
+                debug=False)
