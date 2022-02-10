@@ -81,7 +81,10 @@ def main_ip(
         return BasicResponseModel(
             error=None,
             result=IPNonsenseResponseModel(
-                user_ip=userIP, final_list=__superBasedInfo.generate(userIP, disableICMPhopsInfo)),
+                user_ip=userIP,
+                final_list=__superBasedInfo.generate(userIP,
+                                                     disableICMPhopsInfo),
+            ),
         )
     except RequestException as e:
         print(e)
@@ -108,8 +111,10 @@ def main_ip(
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app",
-                host="0.0.0.0", # skipcq: BAN-B104
-                port=8000,
-                log_level="info",
-                debug=False)
+    uvicorn.run(
+        "main:app",
+        host="0.0.0.0",  # skipcq: BAN-B104
+        port=8000,
+        log_level="info",
+        debug=False,
+    )
