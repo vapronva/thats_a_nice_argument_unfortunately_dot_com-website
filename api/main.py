@@ -1,5 +1,5 @@
 from distutils.log import debug
-from ipaddress import IPv4Address
+from ipaddress import IPv4Address, AddressValueError
 import os
 
 from fastapi import FastAPI, Request, Response
@@ -69,7 +69,10 @@ def main_ip(request: Request,
     """
     try:
         # userIP = IPv4Address(request.client.host)
-        userIP = IPv4Address(request.headers.get("X-Forwarded-For"))
+        try:
+            userIP = IPv4Address(request.headers.get("X-Forwarded-For"))
+        except AddressValueError:
+            userIP = IPv4Address(request.headers.get("X-Forwarded-For").split(", ")[0])
         return BasicResponseModel(
             error=None,
             result=IPNonsenseResponseModel(
@@ -77,7 +80,10 @@ def main_ip(request: Request,
         )
     except RequestException as e:
         print(e)
-        userIP = IPv4Address(request.headers.get("X-Forwarded-For"))
+        try:
+            userIP = IPv4Address(request.headers.get("X-Forwarded-For"))
+        except AddressValueError:
+            userIP = IPv4Address(request.headers.get("X-Forwarded-For").split(", ")[0])
         response.status_code = 500
         return BasicResponseModel(
             error=ErrorResponseModel(
