@@ -208,7 +208,10 @@ class NonsenseIPInformationGenerator:
                 else:
                     bllngrr.append(str(self.__faker.hostname()))
             bllngrr.append(f"TOTAL HOPS: {ayoNumberOfHops}")
-        for _ in range(random.randint(6, 9)):
+        valueToBeDecremented = 0
+        if disableICMPhopsInfo:
+            valueToBeDecremented = 4
+        for _ in range(random.randint(6-valueToBeDecremented, 8-valueToBeDecremented)):
             bllngrr.append(
                 self.generateRandomPortForwardingConnectionsLikeMKT())
         bllngrr.append(f"EXTERNAL MAC: {self.__faker.mac_address()}")
