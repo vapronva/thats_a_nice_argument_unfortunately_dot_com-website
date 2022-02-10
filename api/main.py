@@ -55,14 +55,16 @@ Thanks for visiting!"),
 @app.get("/ip")
 def main_ip(request: Request,
             response: Response,
-            response_model=BasicResponseModel):
+            response_model = BasicResponseModel,
+            disableICMPhopsInfo: bool = False):
     """
     Spit out the information about the requester's IP address.
 
     Args:
         request (Request): Request object.
         response (Response): Response object.
-        response_model ([type], optional). Defaults to BasicResponseModel.
+        response_model ([BasicResponseModel], optional). Defaults to BasicResponseModel.
+        disableICMPhopsInfo ([bool], optional). Defaults to False.
 
     Returns:
         BasicResponseModel: The information about the requester's IP address.

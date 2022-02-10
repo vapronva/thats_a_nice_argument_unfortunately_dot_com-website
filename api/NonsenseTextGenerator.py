@@ -140,7 +140,7 @@ class NonsenseIPInformationGenerator:
     is_user=self.__faker.boolean(),
     is_dynamic=self.__faker.boolean())}"""
 
-    def generate(self, userIP: IPv4Address) -> list:
+    def generate(self, userIP: IPv4Address, disableICMPhopsInfo: bool) -> list:
         """
         Generate a random nonsense information for the given IP.
 
@@ -194,18 +194,19 @@ class NonsenseIPInformationGenerator:
                     "DNS-Static",
                     "DNS-Dynamic",
                 ])),
-            "ICMP HOPS:",
         ]
-        ayoNumberOfHops = random.randint(5, 9)
-        for _ in range(ayoNumberOfHops):
-            if self.__faker.boolean():
-                bllngrr.append(
-                    str(
-                        self.__faker.ipv4_private(address_class="a" if self.
-                                                  __faker.boolean() else "b")))
-            else:
-                bllngrr.append(str(self.__faker.hostname()))
-        bllngrr.append(f"TOTAL HOPS: {ayoNumberOfHops}")
+        if not disableICMPhopsInfo:
+            bllngrr.append("ICMP HOPS:")
+            ayoNumberOfHops = random.randint(5, 9)
+            for _ in range(ayoNumberOfHops):
+                if self.__faker.boolean():
+                    bllngrr.append(
+                        str(
+                            self.__faker.ipv4_private(address_class="a" if self.
+                                                    __faker.boolean() else "b")))
+                else:
+                    bllngrr.append(str(self.__faker.hostname()))
+            bllngrr.append(f"TOTAL HOPS: {ayoNumberOfHops}")
         for _ in range(random.randint(6, 9)):
             bllngrr.append(
                 self.generateRandomPortForwardingConnectionsLikeMKT())
