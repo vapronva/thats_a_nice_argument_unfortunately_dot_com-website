@@ -3,6 +3,7 @@ from distutils.log import debug
 from ipaddress import AddressValueError, IPv4Address
 
 import uvicorn
+from DB import DB
 from fastapi import FastAPI, Request, Response
 from IPInfoAPI import IPInfoAPI
 from models import (
@@ -14,7 +15,6 @@ from models import (
 )
 from NonsenseTextGenerator import NonsenseIPInformationGenerator
 from ProxyCheckAPI import ProxyCheckAPI
-from DB import DB
 
 # Create the FastAPI application
 app = FastAPI(
@@ -87,13 +87,10 @@ def main_ip(
             result=IPNonsenseResponseModel(
                 user_ip=userIP,
                 final_list=__db.add_nni(
-                    userIP, __superBasedInfo.generate(
-                        userIP, disableICMPhopsInfo)
-                    ) if __db.get_nni(
-                        userIP.__str__()
-                        ) is None else __db.get_nni(
-                            userIP.__str__()
-                            ),
+                    userIP,
+                    __superBasedInfo.generate(userIP, disableICMPhopsInfo))
+                if __db.get_nni(userIP.__str__()) is None else __db.get_nni(
+                    userIP.__str__()),
             ),
         )
     except RequestException as e:
