@@ -3,6 +3,9 @@ version: "3"
 services:
   api:
     image: thats-a-nice-argument-unfortunately-dot-com-api:${IMAGE_VERSION}
+    restart: unless-stopped
+    networks:
+      - "wa-thatsaniceargumentunfortunately-network"
     container_name: "web_api-thats-a-nice-argument-unfortunately-dot-com"
     environment:
       - IPINFO_API_KEY=${IPINFO_API_KEY}
@@ -12,6 +15,13 @@ services:
       - 6015:8000
   web:
     image: thats-a-nice-argument-unfortunately-dot-com-web:${IMAGE_VERSION}
+    restart: unless-stopped
+    networks:
+      - "wa-thatsaniceargumentunfortunately-network"
     container_name: "web-thats-a-nice-argument-unfortunately-dot-com"
     ports:
       - 6021:8000
+
+networks:
+  wa-thatsaniceargumentunfortunately-network:
+    external: true
