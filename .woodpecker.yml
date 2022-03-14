@@ -8,6 +8,7 @@ pipeline:
     secrets:
       - IPINFO_API_KEY
       - PROXYCHECK_API_KEY
+      - MONGODB_URI
     when:
       branch: main
       event: [push, tag]

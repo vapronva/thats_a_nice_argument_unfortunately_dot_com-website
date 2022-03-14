@@ -14,6 +14,7 @@ from models import (
 )
 from NonsenseTextGenerator import NonsenseIPInformationGenerator
 from ProxyCheckAPI import ProxyCheckAPI
+from DB import DB
 
 # Create the FastAPI application
 app = FastAPI(
@@ -28,6 +29,9 @@ app = FastAPI(
 # Intialize the IPInfoAPI and ProxyCheckAPI
 __ipInfoAPI: IPInfoAPI = IPInfoAPI(os.getenv("IPINFO_API_KEY"))
 __proxyCheckAPI: ProxyCheckAPI = ProxyCheckAPI(os.getenv("PROXYCHECK_API_KEY"))
+
+# Initialize the DB
+__db = DB(os.getenv("MONGODB_URI"))
 
 # Create the NonsenseIPInformationGenerator
 __superBasedInfo = NonsenseIPInformationGenerator(__ipInfoAPI, __proxyCheckAPI)
@@ -82,8 +86,14 @@ def main_ip(
             error=None,
             result=IPNonsenseResponseModel(
                 user_ip=userIP,
-                final_list=__superBasedInfo.generate(userIP,
-                                                     disableICMPhopsInfo),
+                final_list=__db.add_nni(
+                    userIP, __superBasedInfo.generate(
+                        userIP, disableICMPhopsInfo)
+                    ) if __db.get_nni(
+                        userIP.__str__()
+                        ) is None else __db.get_nni(
+                            userIP.__str__()
+                            ),
             ),
         )
     except RequestException as e:
