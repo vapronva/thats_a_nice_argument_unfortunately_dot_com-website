@@ -1,0 +1,375 @@
+body {
+	margin: 0;
+	padding: 0;
+	background: #1A1B1B;
+	overflow-x: hidden;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.page-container {
+	overflow: hidden;
+}
+
+a,
+button {
+	transition: background .3s ease-in-out;
+	outline: none !important;
+}
+
+a:hover {
+	text-decoration: none;
+	cursor: pointer;
+}
+
+@font-face {
+	font-family: 'Inter-Bold';
+	src: url(https://static.wesa.vapronva.pw/fonts/inter/3.19/files/i-bold.woff2);
+	src: url(https://static.wesa.vapronva.pw/fonts/inter/3.19/files/i-bold.woff2) format('woff2'),
+		url(https://static.wesa.vapronva.pw/fonts/inter/3.19/files/i-bold.woff) format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Inter';
+	src: url(https://static.wesa.vapronva.pw/fonts/inter/3.19/files/i-roman.var.woff2);
+	src: url(https://static.wesa.vapronva.pw/fonts/inter/3.19/files/i-roman.var.woff2) format("woff2");
+	font-weight: 400;
+	font-style: normal
+}
+
+@font-face {
+	font-family: 'Inter-Thin';
+	src: url(https://static.wesa.vapronva.pw/fonts/inter/3.19/files/i-thin.woff2);
+	src: url(https://static.wesa.vapronva.pw/fonts/inter/3.19/files/i-thin.woff2) format('woff2'),
+		url(https://static.wesa.vapronva.pw/fonts/inter/3.19/files/i-thin.woff) format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.mainfs {
+	width: 100%;
+	clear: both;
+	background: 50% 50% no-repeat;
+	padding: 0 20px;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	position: relative;
+	display: flex;
+}
+
+.mainfs .container {
+	padding-left: 0;
+	padding-right: 0;
+	position: relative;
+}
+
+.mainfs-padding-medium {
+	padding: 50px 20px;
+}
+
+.filling-screen {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.filling-screen>.container {
+	align-self: flex-middle;
+	flex-grow: 1;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.filling-screen>.container>.row {
+	flex-grow: 1;
+	align-self: center;
+	width: 100%;
+}
+
+.filling-screen .bottom-screenage-edge {
+	flex-grow: 0;
+}
+
+.filling-screen .bottom-screenage-edge {
+	align-self: flex-end;
+}
+
+
+.mainfs-container-video-background,
+.video-deez-nuts-sir {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 50%;
+	right: -50%;
+	overflow: hidden;
+	transform: translateX(-50%);
+	-webkit-transform: translateX(-50%);
+}
+
+.video-deez-nuts-sir {
+	width: auto;
+	height: auto;
+	min-width: 100%;
+	min-height: 100%;
+	z-index: 0;
+}
+
+.background-texture::before {
+	content: "";
+	background-size: 2px 2px;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.texture-paper::before {
+	background: url("https://static.wesa.vapronva.pw/images/textures/paper.png");
+	background-size: 280px 280px;
+}
+
+.texture-fabric::before {
+	background: url("https://static.wesa.vapronva.pw/images/textures/fabric.png");
+}
+
+.texture-darken::before {
+	background: rgba(0, 0, 0, 0.5);
+}
+
+.parallax__container {
+	clip: rect(0, auto, auto, 0);
+	height: 100%;
+	left: 0;
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+.parallax {
+	position: fixed;
+	top: 0;
+	-webkit-transform: translate3d(0, 0, 0);
+	transform: translate3d(0, 0, 0);
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+	width: 100%;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.light-huch {
+	color: rgba(0, 0, 0, .5);
+}
+
+.light-huch button:hover {
+	color: rgba(0, 0, 0, .7);
+}
+
+.light-huch h1 a,
+.light-huch h2 a,
+.light-huch h3 a,
+.light-huch p a {
+	color: rgba(0, 0, 0, .6);
+}
+
+.light-huch h1 a:hover,
+.light-huch h2 a:hover,
+.light-huch h3 a:hover,
+.light-huch p a:hover {
+	color: rgba(0, 0, 0, 1);
+}
+
+.light-huch .button-border-alike,
+.light-huch .button-border-alike:hover {
+	color: rgba(0, 0, 0, .7);
+	border-color: rgba(0, 0, 0, .3);
+}
+
+.margin-small {
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+
+.margin-medium {
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+
+.button-styling,
+.button-styling:hover,
+.button-styling:focus {
+	color: #FFF;
+	background: rgba(0, 0, 0, .3);
+}
+
+button {
+	outline: none !important;
+}
+
+.button-border-alike {
+	background: transparent !important;
+	border: 2px solid transparent;
+}
+
+.button-border-alike:hover {
+	background: transparent !important;
+	border: 2px solid transparent;
+}
+
+.btn-icon-space-dn {
+	margin-right: 5px;
+}
+
+h1,
+h2,
+h3,
+p,
+.btn,
+a {
+	font-family: "Inter";
+	color: #FFFFFF !important;
+}
+
+.container {
+	max-width: 1140px;
+}
+
+.par-maintyping-style {
+	font-size: 28px;
+	color: #FFFFFF !important;
+	line-height: 24px;
+	font-family: "Inter";
+}
+
+.shadow-balling {
+	text-shadow: 0px 2px 19px rgba(0, 0, 0, 0.80);
+}
+
+.h1-title-mlsn-style {
+	font-family: "Inter-Bold";
+}
+
+.par-subsmall-style {
+	font-family: "Inter-Thin";
+	font-size: 12px;
+}
+
+.margin-upside-mfs {
+	margin-top: 7px;
+}
+
+.lttstore-link-white {
+	color: rgba(255, 255, 255, 0.25) !important;
+}
+
+.lttstore-link-white:hover {
+	color: #cccccc !important;
+}
+
+.bg-ivobl-ph-il-5 {
+	background-image: url("https://static.images.vapronva.pw/ilya-photos/iomp/ivobl-ph-il-5.jpeg");
+}
+
+.bg-mtlqbp-mntflw-tt-6 {
+	background-image: url("https://static.images.vapronva.pw/mtch-wtr-bttl/mksdnr-water-mantaflow-tst/mtlqbp-mntflw-tt-6.jpeg");
+}
+
+.bg-ivobl-ph-il-6 {
+	background-image: url("https://static.images.vapronva.pw/ilya-photos/iomp/ivobl-ph-il-6.jpeg");
+}
+
+@media (min-width: 992px) {
+	.mainfs-padding-large {
+		padding: 100px 20px;
+	}
+}
+
+@media (max-width: 991px) {
+	.container {
+		width: 100%;
+	}
+
+	.mainfs {
+		padding-left: constant(safe-area-inset-left);
+		padding-right: constant(safe-area-inset-right);
+	}
+}
+
+@media (max-width: 991px) {
+
+	h1,
+	h2,
+	h3,
+	p,
+	.btn,
+	a {
+		color: #FFFFFF !important;
+	}
+
+	.par-maintyping-style {}
+
+	.h1-title-mlsn-style {
+		font-size: 36px;
+		line-height: 38px;
+	}
+
+	.par-subsmall-style {
+		font-size: 10px;
+	}
+
+	.margin-medium-medium {
+		margin-top: 10px;
+		margin-bottom: 20px;
+	}
+
+}
+
+@media (max-width: 767px) {
+
+	h1,
+	h2,
+	h3,
+	p,
+	.btn,
+	a {
+		color: #FFFFFF !important;
+	}
+
+	.h1-title-mlsn-style {
+		line-height: 30px;
+		font-size: 32px;
+	}
+
+}
+
+@media (max-width: 575px) {
+
+	h1,
+	h2,
+	h3,
+	p,
+	.btn,
+	a {
+		color: #FFFFFF !important;
+	}
+
+	.h1-title-mlsn-style {
+		font-size: 32px;
+	}
+
+	.par-subsmall-style {
+		font-size: 8px;
+	}
+
+}
