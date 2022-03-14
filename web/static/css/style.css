@@ -368,6 +368,11 @@ a {
 		font-size: 32px;
 	}
 
+	.par-maintyping-style {
+		font-size: 20px;
+		line-height: 21px;
+	}
+
 	.par-subsmall-style {
 		font-size: 8px;
 	}
