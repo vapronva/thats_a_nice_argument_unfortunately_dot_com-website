@@ -10,3 +10,8 @@ services:
       - MONGODB_URI=${MONGODB_URI}
     ports:
       - 6015:8000
+  web:
+    image: thats-a-nice-argument-unfortunately-dot-com-web:${IMAGE_VERSION}
+    container_name: "web-thats-a-nice-argument-unfortunately-dot-com"
+    ports:
+      - 6021:8000
