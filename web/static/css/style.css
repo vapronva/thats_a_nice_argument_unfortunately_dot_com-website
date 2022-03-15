@@ -100,17 +100,16 @@ a:hover {
 	align-self: flex-end;
 }
 
-
 .mainfs-container-video-background,
 .video-deez-nuts-sir {
 	position: absolute;
-	top: 0;
-	bottom: 0;
+    top: 50%;
+	bottom: -50%;
 	left: 50%;
 	right: -50%;
 	overflow: hidden;
-	transform: translateX(-50%);
-	-webkit-transform: translateX(-50%);
+	transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
 }
 
 .video-deez-nuts-sir {
@@ -287,6 +286,10 @@ a {
 
 .bg-ivobl-ph-il-6 {
 	background-image: url("https://static.images.vapronva.pw/ilya-photos/iomp/ivobl-ph-il-6.jpeg");
+}
+
+.bg-ivobl-ph-il-7 {
+	background-image: url("https://static.images.vapronva.pw/ilya-photos/iomp/ivobl-ph-il-7.jpeg");
 }
 
 @media (min-width: 992px) {

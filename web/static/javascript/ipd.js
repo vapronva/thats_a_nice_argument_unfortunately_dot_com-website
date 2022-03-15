@@ -9,14 +9,14 @@ fetch("https://api.thats-a-nice-argument-unfortunately.com/v1/ip")
         textArrayLength = originalTextArray[0].length;
     });
 
-var eachCharachterDelay = 22;
+var eachCharachterDelay = 23;
 // var eachCharachterDelay = 0;
 var startPositionArray = 0;
 var maxLinesAtTime = 50;
 var currentTextPosition = 0;
 var contentOfaLine = '';
 var nextLineDelay = 230;
-var startTimeDelay = 2100;
+var startTimeDelay = 2200;
 // var nextLineDelay = 0;
 // var startTimeDelay = 0;
 var currentRow;
