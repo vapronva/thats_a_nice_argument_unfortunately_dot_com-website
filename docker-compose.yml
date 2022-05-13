@@ -2,7 +2,7 @@ version: "3"
 
 services:
   api:
-    image: thats-a-nice-argument-unfortunately-dot-com-api:${IMAGE_VERSION}
+    image: registry.vapronva.pw/api/thats_a_nice_argument_unfortunately_dot_com-api:latest
     restart: unless-stopped
     networks:
       - "wa-thatsaniceargumentunfortunately-network"
@@ -14,7 +14,7 @@ services:
     ports:
       - 6015:8000
   web:
-    image: thats-a-nice-argument-unfortunately-dot-com-web:${IMAGE_VERSION}
+    image: registry.vapronva.pw/website/thats_a_nice_argument_unfortunately_dot_com-website:latest
     restart: unless-stopped
     networks:
       - "wa-thatsaniceargumentunfortunately-network"

@@ -1,0 +1,67 @@
+stages:
+- test
+- build
+- deploy
+
+sast:
+  stage: test
+include:
+- template: Security/SAST.gitlab-ci.yml
+- template: Security/SAST-IaC.latest.gitlab-ci.yml
+
+build-api:
+  stage: build
+  services:
+  - docker:dind
+  before_script:
+  - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASSWORD" $REGISTRY
+  script:
+  - cd api/
+  - docker build --pull -t "$REGISTRY/api/thats_a_nice_argument_unfortunately_dot_com-api" .
+  - docker push "$REGISTRY/api/thats_a_nice_argument_unfortunately_dot_com-api"
+  rules:
+  - if: $CI_COMMIT_BRANCH == "main"
+    exists:
+    - api/Dockerfile
+    changes:
+    - api/**/*
+    - api/*
+    - docker-compose.yml
+
+build-web:
+  stage: build
+  services:
+  - docker:dind
+  before_script:
+  - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASSWORD" $REGISTRY
+  script:
+  - cd web/
+  - docker build --pull -t "$REGISTRY/website/thats_a_nice_argument_unfortunately_dot_com-website" .
+  - docker push "$REGISTRY/website/thats_a_nice_argument_unfortunately_dot_com-website"
+  rules:
+  - if: $CI_COMMIT_BRANCH == "main"
+    exists:
+    - web/Dockerfile
+    changes:
+    - web/**/*
+    - web/*
+    - docker-compose.yml
+
+deploy-job:
+  stage: deploy
+  before_script:
+  - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASSWORD" $REGISTRY
+  script:
+  - docker-compose -f 'docker-compose.yml' --project-name 'wa-tnauc' down
+  - docker-compose -f 'docker-compose.yml' --project-name 'wa-tnauc' up -d
+  rules:
+  - if: $CI_COMMIT_BRANCH == "main"
+    exists:
+    - docker-compose.yml
+    changes:
+    - api/**/*
+    - api/*
+    - web/**/*
+    - web/*
+    - docker-compose.yml
+    - .gitlab-ci.yml
