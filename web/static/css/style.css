@@ -24,26 +24,26 @@ a:hover {
 
 @font-face {
 	font-family: 'Inter-Bold';
-	src: url(https://cdn.wesa.vapronva.pw/fonts/inter/3.19/files/i-bold.woff2);
-	src: url(https://cdn.wesa.vapronva.pw/fonts/inter/3.19/files/i-bold.woff2) format('woff2'),
-		url(https://cdn.wesa.vapronva.pw/fonts/inter/3.19/files/i-bold.woff) format('woff');
+	src: url(https://static.wesa.vapronva.pw/fonts/inter/3.19/files/i-bold.woff2);
+	src: url(https://static.wesa.vapronva.pw/fonts/inter/3.19/files/i-bold.woff2) format('woff2'),
+		url(https://static.wesa.vapronva.pw/fonts/inter/3.19/files/i-bold.woff) format('woff');
 	font-weight: normal;
 	font-style: normal;
 }
 
 @font-face {
 	font-family: 'Inter';
-	src: url(https://cdn.wesa.vapronva.pw/fonts/inter/3.19/files/i-roman.var.woff2);
-	src: url(https://cdn.wesa.vapronva.pw/fonts/inter/3.19/files/i-roman.var.woff2) format("woff2");
+	src: url(https://static.wesa.vapronva.pw/fonts/inter/3.19/files/i-roman.var.woff2);
+	src: url(https://static.wesa.vapronva.pw/fonts/inter/3.19/files/i-roman.var.woff2) format("woff2");
 	font-weight: 400;
 	font-style: normal
 }
 
 @font-face {
 	font-family: 'Inter-Thin';
-	src: url(https://cdn.wesa.vapronva.pw/fonts/inter/3.19/files/i-thin.woff2);
-	src: url(https://cdn.wesa.vapronva.pw/fonts/inter/3.19/files/i-thin.woff2) format('woff2'),
-		url(https://cdn.wesa.vapronva.pw/fonts/inter/3.19/files/i-thin.woff) format('woff');
+	src: url(https://static.wesa.vapronva.pw/fonts/inter/3.19/files/i-thin.woff2);
+	src: url(https://static.wesa.vapronva.pw/fonts/inter/3.19/files/i-thin.woff2) format('woff2'),
+		url(https://static.wesa.vapronva.pw/fonts/inter/3.19/files/i-thin.woff) format('woff');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -131,12 +131,12 @@ a:hover {
 }
 
 .texture-paper::before {
-	background: url("https://cdn.wesa.vapronva.pw/images/textures/paper.png");
+	background: url("https://static.wesa.vapronva.pw/images/textures/paper.png");
 	background-size: 280px 280px;
 }
 
 .texture-fabric::before {
-	background: url("https://cdn.wesa.vapronva.pw/images/textures/fabric.png");
+	background: url("https://static.wesa.vapronva.pw/images/textures/fabric.png");
 }
 
 .texture-darken::before {
