@@ -1,5 +1,4 @@
 import os
-from distutils.log import debug
 from ipaddress import AddressValueError, IPv4Address
 
 import uvicorn
