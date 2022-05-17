@@ -45,8 +45,7 @@ def main_ipp():
     try:
         userIP = IPv4Address(request.headers.get("X-Forwarded-For"))
     except AddressValueError:
-        userIP = IPv4Address(
-            request.headers.get("X-Forwarded-For").split(", ")[0])
+        userIP = IPv4Address("104.18.100.148")
     return render_template("ipp.html", userIP=str(userIP))
 
 
