@@ -86,3 +86,4 @@ deploy-storage:
     - web/**/*
     - web/*
     - .gitlab-ci.yml
+    - scripts/prepareAndPushStorage.sh
