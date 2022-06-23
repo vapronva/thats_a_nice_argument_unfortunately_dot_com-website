@@ -34,7 +34,7 @@ wget https://static.images.vapronva.pw/ilya-photos/iomp/ivobl-ph-il-7.jpeg -O "$
 wget https://static.images.vapronva.pw/mtch-wtr-bttl/mksdnr-water-mantaflow-tst/mtlqbp-mntflw-tt-6.jpeg -O "$TMP_DIR_NAME/images/backgrounds/mksdnr-water-mantaflow-tst/mtlqbp-mntflw-tt-6.jpeg"
 echo "Downloaded large videos and images"
 
-rclone copy "$TMP_DIR_NAME/" slctl-sttctnaudc:static_thatsaniceargumentunfortunately_com-7e358dffde76
+rclone --config rclone.conf copy "$TMP_DIR_NAME/" slctl-sttctnaudc:static_thatsaniceargumentunfortunately_com-7e358dffde76
 echo "Pushed to Selectel Storage"
 
 rm -rf "$TMP_DIR_NAME"
