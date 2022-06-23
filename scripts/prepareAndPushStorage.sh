@@ -4,7 +4,7 @@ TMP_DIR_NAME=/tmp/tnaudc-$(date +%s)
 mkdir -p "$TMP_DIR_NAME"
 echo "Created temporary directory $TMP_DIR_NAME"
 
-cp -r "web/static/" "$TMP_DIR_NAME"
+cp -r web/static/* "$TMP_DIR_NAME"
 echo "Copied static files to $TMP_DIR_NAME"
 
 ls -lahR "$TMP_DIR_NAME"
