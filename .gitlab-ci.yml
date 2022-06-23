@@ -57,7 +57,7 @@ deploy-storage:
   - npm install uglifycss -g
   - npm install uglify-js -g
   - apk add --update --no-cache rclone
-  - echo $RCLONE_CONFIG > rclone.conf
+  - echo -e "$RCLONE_CONFIG" > rclone.conf
   script:
   - bash scripts/prepareAndPushStorage.sh
   rules:
