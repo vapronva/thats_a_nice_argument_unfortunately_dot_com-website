@@ -1,6 +1,7 @@
 stages:
 - test
 - build
+- assets-deploy
 - deploy
 
 sast:
@@ -47,27 +48,8 @@ build-web:
     - web/*
     - docker-compose.yml
 
-deploy-job:
-  stage: deploy
-  before_script:
-  - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASSWORD" $REGISTRY
-  script:
-  - docker-compose -f 'docker-compose.yml' --project-name 'wa-tnauc' down
-  - docker-compose -f 'docker-compose.yml' --project-name 'wa-tnauc' up -d
-  rules:
-  - if: $CI_COMMIT_BRANCH == "main"
-    exists:
-    - docker-compose.yml
-    changes:
-    - api/**/*
-    - api/*
-    - web/**/*
-    - web/*
-    - docker-compose.yml
-    - .gitlab-ci.yml
-
 deploy-storage:
-  stage: deploy
+  stage: assets-deploy
   before_script:
   - apk update && apk add ca-certificates && update-ca-certificates && apk add openssl
   - apk add --no-cache wget
@@ -87,3 +69,23 @@ deploy-storage:
     - web/*
     - .gitlab-ci.yml
     - scripts/prepareAndPushStorage.sh
+
+deploy-job:
+  stage: deploy
+  before_script:
+  - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASSWORD" $REGISTRY
+  script:
+  - ASSETS_VERSION=$(cat version.txt)
+  - ASSETS_VERSION=$ASSETS_VERSION docker-compose -f 'docker-compose.yml' --project-name 'wa-tnauc' down
+  - ASSETS_VERSION=$ASSETS_VERSION docker-compose -f 'docker-compose.yml' --project-name 'wa-tnauc' up -d
+  rules:
+  - if: $CI_COMMIT_BRANCH == "main"
+    exists:
+    - docker-compose.yml
+    changes:
+    - api/**/*
+    - api/*
+    - web/**/*
+    - web/*
+    - docker-compose.yml
+    - .gitlab-ci.yml

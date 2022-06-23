@@ -22,6 +22,7 @@ services:
     environment:
       - VIRTUAL_HOST=thats-a-nice-argument-unfortunately.com
       - VIRTUAL_PORT=8000
+      - ASSETS_VERSION=${ASSETS_VERSION}
 
 networks:
   wa-thatsaniceargumentunfortunately-network:

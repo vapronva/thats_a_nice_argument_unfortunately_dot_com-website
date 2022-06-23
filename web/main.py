@@ -1,8 +1,10 @@
 from ipaddress import AddressValueError, IPv4Address
-
+import os
 from flask import Flask, jsonify, render_template, request
 
 app = Flask("web-thats_a_nice_argument_unfortunately_dot_com")
+
+ASSETS_VERSION = os.environ.get("ASSETS_VERSION")
 
 
 @app.errorhandler(404)
@@ -37,7 +39,8 @@ def error_500(e):
 
 @app.route("/")
 def main_root():
-    return render_template("index.html")
+    enableOGPreviews = False if request.args.get("n") is not None else True
+    return render_template("index.html", enableOGPreviews=enableOGPreviews, ASSETS_VERSION=ASSETS_VERSION)
 
 
 @app.route("/ipp")
@@ -46,7 +49,7 @@ def main_ipp():
         userIP = IPv4Address(request.headers.get("X-Forwarded-For"))
     except AddressValueError:
         userIP = IPv4Address("104.18.100.148")
-    return render_template("ipp.html", userIP=str(userIP))
+    return render_template("ipp.html", userIP=str(userIP), ASSETS_VERSION=ASSETS_VERSION)
 
 
 app.run(debug=False, host="0.0.0.0", port=8000) # skipcq: BAN-B104
