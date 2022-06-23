@@ -7,6 +7,8 @@ echo "Created temporary directory $TMP_DIR_NAME"
 cp -r "web/static/" "$TMP_DIR_NAME"
 echo "Copied static files to $TMP_DIR_NAME"
 
+ls -lahR "$TMP_DIR_NAME"
+
 mkdir -p "$TMP_DIR_NAME/css/_/$(cat version.txt)"
 mv "$TMP_DIR_NAME/css/style.css" "$TMP_DIR_NAME/css/_/$(cat version.txt)/style.css"
 echo "Moved style.css to $TMP_DIR_NAME/css/_/$(cat version.txt)/style.css"

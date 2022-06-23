@@ -39,7 +39,7 @@ def error_500(e):
 
 @app.route("/")
 def main_root():
-    enableOGPreviews = False if request.args.get("n") is not None else True
+    enableOGPreviews = not(bool(request.args.get("n") is not None))
     return render_template("index.html", enableOGPreviews=enableOGPreviews, ASSETS_VERSION=ASSETS_VERSION)
 
 
