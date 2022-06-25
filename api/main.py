@@ -115,6 +115,38 @@ def main_ip(
         )
 
 
+@app.get("/health")
+def main_health(
+    request: Request,
+    response: Response,
+    response_model=BasicResponseModel,
+):
+    """
+    Check the health of the server.
+
+    Args:
+        request (Request): Request object.
+        response (Response): Response object.
+        response_model ([BasicResponseModel], optional). Defaults to BasicResponseModel.
+
+    Returns:
+        BasicResponseModel: The health description of the internal components.
+    """
+    if __db.check_health():
+        return BasicResponseModel(
+            error=None,
+            result=IntroMessageResponseModel(
+                message="I'm healthy! I'm healthy! I'm healthy!"),
+        )
+    else:
+        response.status_code = 500
+        return BasicResponseModel(
+            error=None,
+            result=IntroMessageResponseModel(
+                message="I'm not healthy! I'm not healthy! I'm not healthy!"),
+        )
+
+
 if __name__ == "__main__":
     uvicorn.run(
         "main:app",

@@ -57,3 +57,15 @@ class DB:
         """
         return (self.__cll.find_one({"ip": ip})["nni"]
                 if self.__cll.find_one({"ip": ip}) else None)
+    def check_health(self) -> bool:
+        """
+        Check the health of the DB.
+
+        Returns:
+            bool: True if the DB is healthy, False otherwise.
+        """
+        try:
+            self.__client.server_info()
+            return True
+        except pymongo.errors.ServerSelectionTimeoutError:
+            return False

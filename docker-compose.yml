@@ -4,6 +4,7 @@ services:
   api:
     image: registry.vapronva.pw/api/thats_a_nice_argument_unfortunately_dot_com-api:latest
     restart: unless-stopped
+    user: "1023"
     networks:
       - "wa-thatsaniceargumentunfortunately-network"
     container_name: "web_api-thats-a-nice-argument-unfortunately-dot-com"
@@ -16,6 +17,7 @@ services:
   web:
     image: registry.vapronva.pw/website/thats_a_nice_argument_unfortunately_dot_com-website:latest
     restart: unless-stopped
+    user: "1023"
     networks:
       - "wa-thatsaniceargumentunfortunately-network"
     container_name: "web-thats-a-nice-argument-unfortunately-dot-com"
@@ -23,6 +25,29 @@ services:
       - VIRTUAL_HOST=thats-a-nice-argument-unfortunately.com
       - VIRTUAL_PORT=8000
       - ASSETS_VERSION=${ASSETS_VERSION}
+  db:
+    image: mongo:5.0-focal
+    restart: unless-stopped
+    user: "1023"
+    networks:
+      - "wa-thatsaniceargumentunfortunately-network"
+    container_name: "db-thataniceargumentunfortunately-mongodb"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "vapronva"
+      MONGO_INITDB_ROOT_PASSWORD: "${MONGODB_PASSWORD}"
+      MONGO_INITDB_DATABASE: "tnauc"
+    volumes:
+      - tnauc-db-dir:/data/db
+    ports:
+      - 27121:27017
+
+volumes:
+  tnauc-db-dir:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: nfsvers=4,addr=${DATA_SERVER_IP},rw,noatime,nolock,soft,rsize=8192,wsize=8192,tcp,timeo=10
+      device: "${DATA_SERVER_IP}:${DATA_SERVER_DB_LOCATION}"
 
 networks:
   wa-thatsaniceargumentunfortunately-network:
