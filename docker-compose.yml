@@ -1,3 +1,4 @@
+# weapse-thatsaniceargumentunfortunatelycom-main
 version: "3"
 
 services:
@@ -38,8 +39,8 @@ services:
       MONGO_INITDB_DATABASE: "tnauc"
     volumes:
       - tnauc-db-dir:/data/db
-    ports:
-      - 27121:27017
+    # ports:
+    #   - 27121:27017
 
 volumes:
   tnauc-db-dir:
