@@ -27,6 +27,7 @@ build-api:
     changes:
     - api/**/*
     - api/*
+    - .gitlab-ci.yml
     - docker-compose.yml
 
 build-web:
@@ -46,6 +47,7 @@ build-web:
     changes:
     - web/**/*
     - web/*
+    - .gitlab-ci.yml
     - docker-compose.yml
 
 deploy-storage:
@@ -66,7 +68,7 @@ deploy-storage:
     changes:
     - web/**/*
     - web/*
-    - .gitlab-ci.yml
+    # - .gitlab-ci.yml
     - scripts/prepareAndPushStorage.sh
 
 deploy-job:
