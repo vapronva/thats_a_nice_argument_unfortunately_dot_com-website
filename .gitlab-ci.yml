@@ -69,7 +69,7 @@ deploy-storage:
     changes:
     - web/**/*
     - web/*
-    # - .gitlab-ci.yml
+    - .gitlab-ci.yml
     - scripts/prepareAndPushStorage.sh
 
 deploy-job:
