@@ -55,6 +55,8 @@ deploy-storage:
   before_script:
   - apk update && apk add ca-certificates && update-ca-certificates && apk add openssl
   - apk add --no-cache wget
+  - apk add --no-cache git-lfs
+  - git-lfs install
   - apk add --update --no-cache nodejs npm
   - npm install uglifycss -g
   - npm install uglify-js -g
