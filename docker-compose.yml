@@ -3,7 +3,7 @@ version: "3"
 
 services:
   api:
-    image: registry.vapronva.pw/api/thats_a_nice_argument_unfortunately_dot_com-api:latest
+    image: registry.vapronva.pw/vapronva/thats_a_nice_argument_unfortunately_dot_com-website/api:latest
     restart: unless-stopped
     user: "1023"
     networks:
@@ -16,7 +16,7 @@ services:
       - VIRTUAL_HOST=api.thats-a-nice-argument-unfortunately.com
       - VIRTUAL_PORT=8000
   web:
-    image: registry.vapronva.pw/website/thats_a_nice_argument_unfortunately_dot_com-website:latest
+    image: registry.vapronva.pw/vapronva/thats_a_nice_argument_unfortunately_dot_com-website/website:latest
     restart: unless-stopped
     user: "1023"
     networks:

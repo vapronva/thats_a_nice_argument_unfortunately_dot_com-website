@@ -18,8 +18,8 @@ build-api:
   - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
   - cd api/
-  - docker build --pull -t "$CI_REGISTRY/api/thats_a_nice_argument_unfortunately_dot_com-api" .
-  - docker push "$CI_REGISTRY/api/thats_a_nice_argument_unfortunately_dot_com-api"
+  - docker build --pull -t "$CI_REGISTRY/vapronva/thats_a_nice_argument_unfortunately_dot_com-website/api" .
+  - docker push "$CI_REGISTRY/vapronva/thats_a_nice_argument_unfortunately_dot_com-website/api"
   rules:
   - if: $CI_COMMIT_BRANCH == "main"
     exists:
@@ -38,8 +38,8 @@ build-web:
   - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
   - cd web/
-  - docker build --pull -t "$CI_REGISTRY/website/thats_a_nice_argument_unfortunately_dot_com-website" .
-  - docker push "$CI_REGISTRY/website/thats_a_nice_argument_unfortunately_dot_com-website"
+  - docker build --pull -t "$CI_REGISTRY/vapronva/thats_a_nice_argument_unfortunately_dot_com-website/website" .
+  - docker push "$CI_REGISTRY/vapronva/thats_a_nice_argument_unfortunately_dot_com-website/website"
   rules:
   - if: $CI_COMMIT_BRANCH == "main"
     exists:
