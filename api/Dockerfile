@@ -1,9 +1,9 @@
-FROM python:3.10-alpine
+FROM docker.io/library/python:3.11-alpine
 
 WORKDIR /usr/src/app
 
 COPY . .
 
-RUN pip3 install fastapi==0.72.0 Faker==11.3.0 typing_extensions==4.0.1 requests==2.26.0 pydantic==1.8.2 uvicorn==0.17.0 pymongo==4.0.1
+RUN pip3 install fastapi==0.103.1 Faker==19.6.1 typing_extensions==4.8.0 requests==2.31.0 pydantic==2.6.3 uvicorn==0.17.0 pymongo==4.5.0
 
 CMD [ "python3", "main.py" ]

@@ -1,8 +1,8 @@
 // Original code by gavra on https://codepen.io/gavra/pen/tEpzn; modified by vapronva for https://thats-a-nice-argument-unfortunately.com
 
-let startPositionArray = 0; // skipcq: JS-0239
-let currentTextPosition = 0; // skipcq: JS-0239
-let contentOfaLine = ''; // skipcq: JS-0239
+let startPositionArray = 0;
+let currentTextPosition = 0;
+let contentOfaLine = '';
 const eachCharachterDelay = 23;
 const maxLinesAtTime = 50;
 const nextLineDelay = 230;
@@ -15,7 +15,7 @@ fetch('https://api.thats-a-nice-argument-unfortunately.com/v1/ip')
     textArrayLength = originalTextArray[0].length;
   });
 
-function typewriter() { // skipcq: JS-0128
+function typewriter() {
   const destination = document.getElementById('typedtext');
   contentOfaLine = ' ';
   currentRow = Math.max(0, startPositionArray - maxLinesAtTime);

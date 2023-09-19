@@ -6,10 +6,10 @@ from models import RequestException
 
 
 class IPInfoResponse(pydantic.BaseModel):
-    """
-    IPInfo API response model.
+    """IPInfo API response model.
 
     Args:
+    ----
         ip (IPv4Address): The IP address.
         hostname (str): The hostname.
         city (str): The city.
@@ -35,27 +35,29 @@ class IPInfoResponse(pydantic.BaseModel):
 class IPInfoAPI:
     """IPInfo API."""
 
-    def __init__(self, apiKey: str):
-        """
-        Initialize the API.
+    def __init__(self, apiKey: str) -> None:
+        """Initialize the API.
 
         Args:
+        ----
             apiKey (str): The API key.
         """
         self.__apiKey = apiKey
         self.baseURL = "https://ipinfo.io/"
 
     def getInfo(self, ip: IPv4Address) -> IPInfoResponse:
-        """
-        Get the IP information for the given IP address.
+        """Get the IP information for the given IP address.
 
         Args:
+        ----
             ip (IPv4Address): IP address.
 
         Raises:
+        ------
             Exception: If the request failed.
 
         Returns:
+        -------
             IPInfoResponse: The IP information.
         """
         url = self.baseURL + str(ip) + "/json?token=" + self.__apiKey

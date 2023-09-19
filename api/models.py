@@ -9,10 +9,10 @@ class RequestException(Exception):
 
 
 class ErrorResponseModel(pydantic.BaseModel):
-    """
-    Error response model.
+    """Error response model.
 
     Args:
+    ----
         name (str): The error name.
         description (str): The error description.
     """
@@ -22,10 +22,10 @@ class ErrorResponseModel(pydantic.BaseModel):
 
 
 class IPNonsenseResponseModel(pydantic.BaseModel):
-    """
-    IPNonsense response model.
+    """IPNonsense response model.
 
     Args:
+    ----
         user_ip (IPv4Address): The user IP address.
         final_list (list): The list of nonsense information for the user IP address.
     """
@@ -35,10 +35,10 @@ class IPNonsenseResponseModel(pydantic.BaseModel):
 
 
 class IntroMessageResponseModel(pydantic.BaseModel):
-    """
-    Intro message response model.
+    """Intro message response model.
 
     Args:
+    ----
         message (str): The intro message.
     """
 
@@ -46,10 +46,10 @@ class IntroMessageResponseModel(pydantic.BaseModel):
 
 
 class BasicResponseModel(pydantic.BaseModel):
-    """
-    Basic response model.
+    """Basic response model.
 
     Args:
+    ----
         error (Optional[ErrorResponseModel]): The error.
         result (Optional[IPNonsenseResponseModel,
             IntroMessageResponseModel]): The result.

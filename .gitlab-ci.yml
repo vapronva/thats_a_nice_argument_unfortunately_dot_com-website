@@ -1,92 +1,74 @@
 stages:
-- test
-- build
-- assets-deploy
-- deploy
+  - test
+  - build
+  - assets-deploy
 
 sast:
   stage: test
 include:
-- template: Security/SAST.gitlab-ci.yml
-- template: Security/SAST-IaC.latest.gitlab-ci.yml
+  - template: Security/SAST.gitlab-ci.yml
+  - template: Security/SAST-IaC.latest.gitlab-ci.yml
+  - template: Security/Secret-Detection.gitlab-ci.yml
 
 build-api:
   stage: build
-  services:
-  - docker:dind
+  image: docker.io/library/docker:24-git
   before_script:
-  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-  - cd api/
-  - docker build --pull -t "$CI_REGISTRY/vapronva/thats_a_nice_argument_unfortunately_dot_com-website/api" .
-  - docker push "$CI_REGISTRY/vapronva/thats_a_nice_argument_unfortunately_dot_com-website/api"
+    - cd api/
+    - docker build -t "$CI_REGISTRY_IMAGE/api:latest" -f "./Dockerfile" --no-cache --pull "./"
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+    - docker image push --all-tags "$CI_REGISTRY_IMAGE/api"
   rules:
-  - if: $CI_COMMIT_BRANCH == "main"
-    exists:
-    - api/Dockerfile
-    changes:
-    - api/**/*
-    - api/*
-    - .gitlab-ci.yml
-    - docker-compose.yml
+    - if: $CI_COMMIT_BRANCH == "main"
+      exists:
+        - api/Dockerfile
+      changes:
+        - api/**/*
+        - api/*
+        - .gitlab-ci.yml
+        - docker-compose.yml
 
 build-web:
   stage: build
-  services:
-  - docker:dind
+  image: docker.io/library/docker:24-git
   before_script:
-  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-  - cd web/
-  - docker build --pull -t "$CI_REGISTRY/vapronva/thats_a_nice_argument_unfortunately_dot_com-website/website" .
-  - docker push "$CI_REGISTRY/vapronva/thats_a_nice_argument_unfortunately_dot_com-website/website"
+    - cd web/
+    - docker build -t "$CI_REGISTRY_IMAGE/web:latest" -f "./Dockerfile" --no-cache --pull "./"
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+    - docker image push --all-tags "$CI_REGISTRY_IMAGE/web"
   rules:
-  - if: $CI_COMMIT_BRANCH == "main"
-    exists:
-    - web/Dockerfile
-    changes:
-    - web/**/*
-    - web/*
-    - .gitlab-ci.yml
-    - docker-compose.yml
+    - if: $CI_COMMIT_BRANCH == "main"
+      exists:
+        - web/Dockerfile
+      changes:
+        - web/**/*
+        - web/*
+        - .gitlab-ci.yml
+        - docker-compose.yml
 
 deploy-storage:
   stage: assets-deploy
+  image: docker.io/library/alpine:latest
+  needs:
+    - build-web
   before_script:
-  - apk update && apk add ca-certificates && update-ca-certificates && apk add openssl
-  - apk add --no-cache wget
-  - apk add --update --no-cache nodejs npm
-  - npm install uglifycss -g
-  - npm install uglify-js -g
-  - apk add --update --no-cache rclone
-  - echo -e "$RCLONE_CONFIG" > rclone.conf
+    - apk update && apk add ca-certificates && update-ca-certificates && apk add openssl
+    - apk add --no-cache wget
+    - apk add --update --no-cache nodejs npm
+    - npm install uglifycss -g
+    - npm install uglify-js -g
+    - apk add --update --no-cache rclone
+    - echo -e "$RCLONE_CONFIG" > rclone.conf
   script:
-  - bash scripts/prepareAndPushStorage.sh
+    - bash scripts/prepareAndPushStorage.sh
   rules:
-  rules:
-  - if: $CI_COMMIT_BRANCH == "main"
-    changes:
-    - web/**/*
-    - web/*
-    - .gitlab-ci.yml
-    - scripts/prepareAndPushStorage.sh
-
-deploy-job:
-  stage: deploy
-  before_script:
-  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-  script:
-  - ASSETS_VERSION=$(cat version.txt)
-  - ASSETS_VERSION=$ASSETS_VERSION docker-compose -f 'docker-compose.yml' --project-name 'weapse-thatsaniceargumentunfortunatelycom-main' down
-  - ASSETS_VERSION=$ASSETS_VERSION docker-compose -f 'docker-compose.yml' --project-name 'weapse-thatsaniceargumentunfortunatelycom-main' up -d
-  rules:
-  - if: $CI_COMMIT_BRANCH == "main"
-    exists:
-    - docker-compose.yml
-    changes:
-    - api/**/*
-    - api/*
-    - web/**/*
-    - web/*
-    - docker-compose.yml
-    - .gitlab-ci.yml
+    - if: $CI_COMMIT_BRANCH == "main"
+      changes:
+        - web/**/*
+        - web/*
+        - .gitlab-ci.yml
+        - scripts/prepareAndPushStorage.sh

@@ -10,13 +10,13 @@ from ProxyCheckAPI import ProxyCheckAnswerModel, ProxyCheckAPI
 
 
 class NonsenseIPInformationGenerator:
-    """Get random information about the given IP!"""
+    """Get random information about the given IP!."""
 
     def __init__(self, iia: IPInfoAPI, pca: ProxyCheckAPI) -> None:
-        """
-        Initialize the class.
+        """Initialize the class.
 
         Args:
+        ----
             iia (IPInfoAPI): IPInfoAPI instance.
             pca (ProxyCheckAPI): ProxyCheckAPI instance.
         """
@@ -29,10 +29,10 @@ class NonsenseIPInformationGenerator:
 
     @staticmethod
     def getRandomDNSProvider() -> str:
-        """
-        Get a random DNS provider.
+        """Get a random DNS provider.
 
-        Returns:
+        Returns
+        -------
             str: IP address of the DNS provider.
         """
         _dnsproviders = [
@@ -56,10 +56,10 @@ class NonsenseIPInformationGenerator:
 
     @staticmethod
     def getRandomCompanyRouterName() -> str:
-        """
-        Get a random company router name.
+        """Get a random company router name.
 
-        Returns:
+        Returns
+        -------
             str: Router's company name.
         """
         _companies = [
@@ -85,10 +85,10 @@ class NonsenseIPInformationGenerator:
 
     @staticmethod
     def getRandomDeviceVendorCompany() -> str:
-        """
-        Get a random device vendor company.
+        """Get a random device vendor company.
 
-        Returns:
+        Returns
+        -------
             str: Device vendor company.
         """
         _companies = [
@@ -119,13 +119,14 @@ class NonsenseIPInformationGenerator:
         return random.choice(_companies)
 
     def generateRandomPortForwardingConnectionsLikeMKT(self) -> str:
-        """
-        Generate a random port forwarding connection.
+        """Generate a random port forwarding connection.
 
         Args:
+        ----
             ip (IPv4Address): The IP address.
 
         Returns:
+        -------
             str: The port forwarding connection string.
         """
         return f"""[{random.choice(['HTTP', 'TCP', 'UDP'])}] \
@@ -141,13 +142,14 @@ class NonsenseIPInformationGenerator:
     is_dynamic=self.__faker.boolean())}"""
 
     def generate(self, userIP: IPv4Address, disableICMPhopsInfo: bool) -> list:
-        """
-        Generate a random nonsense information for the given IP.
+        """Generate a random nonsense information for the given IP.
 
         Args:
+        ----
             userIP (IPv4Address): User's IP address.
 
         Returns:
+        -------
             list: A list of random nonsense information.
         """
         Faker.seed(random.randint(0, 100000))
@@ -170,30 +172,40 @@ class NonsenseIPInformationGenerator:
             f"WAN TYPE: {proxycheck.type}",
             "GATEWAY: " + str(self.__faker.ipv4_private(address_class="c")),
             "SUBNET MASK: 255.255.255.0",
-            "UDP OPEN PORTS: " + ", ".join([
-                str(self.__faker.port_number(is_user=True))
-                for _ in range(random.randint(2, 4))
-            ]),
-            "TCP OPEN PORTS: " + ", ".join([
-                str(self.__faker.port_number(is_system=True))
-                for _ in range(random.randint(1, 3))
-            ]),
+            "UDP OPEN PORTS: "
+            + ", ".join(
+                [
+                    str(self.__faker.port_number(is_user=True))
+                    for _ in range(random.randint(2, 4))
+                ],
+            ),
+            "TCP OPEN PORTS: "
+            + ", ".join(
+                [
+                    str(self.__faker.port_number(is_system=True))
+                    for _ in range(random.randint(1, 3))
+                ],
+            ),
             f"ROUTER VENDOR: {self.getRandomCompanyRouterName()}",
             f"DEVICE VENDOR: {self.getRandomDeviceVendorCompany()}",
-            "CONNECTION TYPE: " + str(
-                self.__faker.random_element(elements=[
-                    "PPTP",
-                    "L2TP",
-                    "PPPoE",
-                    "PPPoA",
-                    "DHCP",
-                    "Static",
-                    "Dynamic",
-                    "DNS",
-                    "DNS-DHCP",
-                    "DNS-Static",
-                    "DNS-Dynamic",
-                ])),
+            "CONNECTION TYPE: "
+            + str(
+                self.__faker.random_element(
+                    elements=[
+                        "PPTP",
+                        "L2TP",
+                        "PPPoE",
+                        "PPPoA",
+                        "DHCP",
+                        "Static",
+                        "Dynamic",
+                        "DNS",
+                        "DNS-DHCP",
+                        "DNS-Static",
+                        "DNS-Dynamic",
+                    ],
+                ),
+            ),
         ]
         if not disableICMPhopsInfo:
             bllngrr.append("ICMP HOPS:")
@@ -203,8 +215,10 @@ class NonsenseIPInformationGenerator:
                     bllngrr.append(
                         str(
                             self.__faker.ipv4_private(
-                                address_class="a" if self.__faker.boolean(
-                                ) else "b")))
+                                address_class="a" if self.__faker.boolean() else "b",
+                            ),
+                        ),
+                    )
                 else:
                     bllngrr.append(str(self.__faker.hostname()))
             bllngrr.append(f"TOTAL HOPS: {ayoNumberOfHops}")
@@ -212,10 +226,9 @@ class NonsenseIPInformationGenerator:
         if disableICMPhopsInfo:
             valueToBeDecremented = 4
         for _ in range(
-                random.randint(6 - valueToBeDecremented,
-                               8 - valueToBeDecremented)):
-            bllngrr.append(
-                self.generateRandomPortForwardingConnectionsLikeMKT())
+            random.randint(6 - valueToBeDecremented, 8 - valueToBeDecremented),
+        ):
+            bllngrr.append(self.generateRandomPortForwardingConnectionsLikeMKT())
         bllngrr.append(f"EXTERNAL MAC: {self.__faker.mac_address()}")
         bllngrr.append("MODEM JUMPS: 64")
         return bllngrr
