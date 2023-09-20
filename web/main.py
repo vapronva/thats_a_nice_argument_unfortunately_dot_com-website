@@ -61,6 +61,3 @@ def main_ipp():
         userIP=str(userIP),
         ASSETS_VERSION=ASSETS_VERSION,
     )
-
-
-app.run(debug=False, host="0.0.0.0", port=8000)
