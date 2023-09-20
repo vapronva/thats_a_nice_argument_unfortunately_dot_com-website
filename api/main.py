@@ -2,8 +2,9 @@ import os
 from ipaddress import AddressValueError, IPv4Address
 
 import uvicorn
-from DB import DB
 from fastapi import FastAPI, Request, Response
+import sentry_sdk
+from DB import DB
 from IPInfoAPI import IPInfoAPI
 from models import (
     BasicResponseModel,
@@ -14,6 +15,12 @@ from models import (
 )
 from NonsenseTextGenerator import NonsenseIPInformationGenerator
 from ProxyCheckAPI import ProxyCheckAPI
+
+sentry_sdk.init(
+    dsn=os.getenv("SENTRY_DSN_BACKEND"),
+    traces_sample_rate=1.0,
+    release=os.getenv("ASSETS_VERSION"),
+)
 
 app = FastAPI(
     debug=True,
