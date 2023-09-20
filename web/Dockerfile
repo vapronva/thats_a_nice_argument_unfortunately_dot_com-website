@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-RUN pip3 install Flask==2.3.3 uvicorn==0.23.2
+RUN pip3 install Flask==2.3.3 gunicorn==21.2.0
 
-ENTRYPOINT [ "uvicorn", "main:app" ]
-CMD [ "--host", "0.0.0.0", "--port", "8000", "--workers", "4" ]
+ENTRYPOINT [ "gunicorn", "main:app" ]
+CMD [ "--bind", "0.0.0.0:8000", "--workers", "6" ]
