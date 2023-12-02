@@ -2,7 +2,14 @@ import os
 from ipaddress import AddressValueError, IPv4Address
 
 from flask import Flask, jsonify, render_template, request
+import sentry_sdk
 
+
+sentry_sdk.init(
+    dsn=os.getenv("SENTRY_DSN_FRONTEND_BACKEND"),
+    traces_sample_rate=1.0,
+    release=os.getenv("ASSETS_VERSION"),
+)
 
 app = Flask("web-thats_a_nice_argument_unfortunately_dot_com")
 
@@ -56,6 +63,8 @@ def main_ipp():
     try:
         userIP = IPv4Address(request.headers.get("X-Forwarded-For"))
     except AddressValueError:
+        userIP = IPv4Address(request.headers.get("X-Forwarded-For").split(", ")[0])
+    except BaseException:
         userIP = IPv4Address("104.18.100.148")
     return render_template(
         "ipp.html",
