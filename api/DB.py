@@ -1,8 +1,10 @@
-from ipaddress import IPv4Address
-from typing import List, Optional
+from typing import TYPE_CHECKING
 
 import pydantic
 import pymongo
+
+if TYPE_CHECKING:
+    from ipaddress import IPv4Address
 
 
 class IPObjectModel(pydantic.BaseModel):
@@ -15,7 +17,7 @@ class IPObjectModel(pydantic.BaseModel):
     """
 
     ip: str
-    nni: List[str]
+    nni: list[str]
 
 
 class DB:
@@ -31,22 +33,22 @@ class DB:
         self.__client = pymongo.MongoClient(mongodbURI)
         self.__cll = self.__client["tnauc"]["ipaddresses"]
 
-    def add_nni(self, ip: IPv4Address, nni: List[str]) -> List[str]:
+    def add_nni(self, ip: IPv4Address, nni: list[str]) -> list[str]:
         """Add the IP address to the DB.
 
         Args:
         ----
             ip (IPv4Address): The IP address.
-            nni (List[str]): The list of nonsense information.
+            nni (list[str]): The list of nonsense information.
 
         Returns:
         -------
-            List[str]: The list of nonsense information.
+            list[str]: The list of nonsense information.
         """
-        self.__cll.insert_one(IPObjectModel(ip=str(ip), nni=nni).dict())
+        self.__cll.insert_one(IPObjectModel(ip=str(ip), nni=nni).model_dump_json())
         return nni
 
-    def get_nni(self, ip: IPv4Address) -> Optional[List[str]]:
+    def get_nni(self, ip: IPv4Address) -> list[str] | None:
         """Get the nonsense information for the given IP address.
 
         Args:
@@ -55,7 +57,7 @@ class DB:
 
         Returns:
         -------
-            Optional[List[str]]: The list of nonsense information.
+            list[str]: The list of nonsense information.
         """
         return (
             self.__cll.find_one({"ip": ip})["nni"]

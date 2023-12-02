@@ -48,7 +48,7 @@ class ProxyCheckAPI:
         -------
             ProxyCheckAnswerModel: The proxy check information.
         """
-        url = self.baseURL + "/" + str(ip) + "?key=" + self.__apiKey
+        url = f"{self.baseURL}/{ip!s}?key={self.__apiKey}"
         response = requests.get(url)
         try:
             if response.status_code == 200:
@@ -58,7 +58,8 @@ class ProxyCheckAPI:
                     proxy=data[str(ip)]["proxy"],
                     type=data[str(ip)]["type"],
                 )
-            raise RequestException("Error: " + response.text)
+            msg = f"Error: {response.text}"
+            raise RequestException(msg)
         except RequestException as e:
             print(e)
             return ProxyCheckAnswerModel(ip=ip, proxy="no", type="Regular")

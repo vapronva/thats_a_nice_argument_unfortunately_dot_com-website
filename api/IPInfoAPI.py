@@ -65,6 +65,8 @@ class IPInfoAPI:
         if response.status_code == 200:
             try:
                 return IPInfoResponse(**response.json())
-            except pydantic.error_wrappers.ValidationError:
-                raise RequestException("Error: " + response.text)
-        raise RequestException("Error: " + response.text)
+            except pydantic.error_wrappers.ValidationError as e:
+                msg = f"Error: {response.text}"
+                raise RequestException(msg) from e
+        msg = f"Error: {response.text}"
+        raise RequestException(msg)

@@ -15,16 +15,10 @@ mkdir -p "${TMP_DIR_NAME}/javascript/_/$(cat version.txt)" || true
 mv "${TMP_DIR_NAME}/javascript/ipd.js" "${TMP_DIR_NAME}/javascript/_/$(cat version.txt)/ipd.js" || true
 echo "Moved ipd.js to ${TMP_DIR_NAME}/javascript/_/$(cat version.txt)/ipd.js" || true
 
-find "${TMP_DIR_NAME}" -name "*.css" -exec uglifycss --output "{}.min" "{}" \;
-while IFS= read -r -d "" file; do
-	mv "${file}" "${file/.css.min/}.min.css"
-done < <(find "${TMP_DIR_NAME}" -name "*.css.min" -print0) || true
+for FILNM in $(find ./web -name "*.css" -not -name "*.min.css"); do minify "$FILNM" >"${FILNM%.*}.min.css"; done
 echo "Minified CSS files"
 
-find "${TMP_DIR_NAME}" -name "*.js" -exec uglifyjs --compress --mangle --output "{}.min" "{}" \;
-while IFS= read -r -d "" file; do
-	mv "${file}" "${file/.js.min/}.min.js"
-done < <(find "${TMP_DIR_NAME}" -name "*.js.min" -print0) || true
+for FILNM in $(find ./web -name "*.js" -not -name "*.min.js"); do minify "$FILNM" >"${FILNM%.*}.min.js"; done
 echo "Minified JS files"
 
 wget https://gl.vprw.ru/tnaudc/thats_a_nice_argument_unfortunately_dot_com-website/-/raw/main/web/static/video/caterpillar-linus-tnaudc-meme-recreation-1080p60fps.mp4 -O "${TMP_DIR_NAME}/video/caterpillar-linus-tnaudc-meme-recreation-1080p60fps.mp4"

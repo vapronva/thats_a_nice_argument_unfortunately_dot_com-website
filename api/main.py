@@ -1,10 +1,10 @@
 import os
 from ipaddress import AddressValueError, IPv4Address
 
-import uvicorn
-from fastapi import FastAPI, Request, Response
 import sentry_sdk
+import uvicorn
 from DB import DB
+from fastapi import FastAPI, Request, Response
 from IPInfoAPI import IPInfoAPI
 from models import (
     BasicResponseModel,
@@ -105,7 +105,7 @@ def main_ip(
         return BasicResponseModel(
             error=ErrorResponseModel(
                 name="Internal Server Error",
-                description="Something went really wrong. Specifically: " + str(e),
+                description=f"Something went really wrong. Specifically: {str(e)}",
             ),
             result=IPNonsenseResponseModel(
                 user_ip=userIP,
@@ -142,14 +142,13 @@ def main_health(
                 message="I'm healthy! I'm healthy! I'm healthy!",
             ),
         )
-    else:
-        response.status_code = 500
-        return BasicResponseModel(
-            error=None,
-            result=IntroMessageResponseModel(
-                message="I'm not healthy! I'm not healthy! I'm not healthy!",
-            ),
-        )
+    response.status_code = 500
+    return BasicResponseModel(
+        error=None,
+        result=IntroMessageResponseModel(
+            message="I'm not healthy! I'm not healthy! I'm not healthy!",
+        ),
+    )
 
 
 if __name__ == "__main__":

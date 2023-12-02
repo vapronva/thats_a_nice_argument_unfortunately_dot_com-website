@@ -222,13 +222,14 @@ class NonsenseIPInformationGenerator:
                 else:
                     bllngrr.append(str(self.__faker.hostname()))
             bllngrr.append(f"TOTAL HOPS: {ayoNumberOfHops}")
-        valueToBeDecremented = 0
-        if disableICMPhopsInfo:
-            valueToBeDecremented = 4
-        for _ in range(
-            random.randint(6 - valueToBeDecremented, 8 - valueToBeDecremented),
-        ):
-            bllngrr.append(self.generateRandomPortForwardingConnectionsLikeMKT())
-        bllngrr.append(f"EXTERNAL MAC: {self.__faker.mac_address()}")
-        bllngrr.append("MODEM JUMPS: 64")
+        valueToBeDecremented = 4 if disableICMPhopsInfo else 0
+        bllngrr.extend(
+            self.generateRandomPortForwardingConnectionsLikeMKT()
+            for _ in range(
+                random.randint(6 - valueToBeDecremented, 8 - valueToBeDecremented),
+            )
+        )
+        bllngrr.extend(
+            (f"EXTERNAL MAC: {self.__faker.mac_address()}", "MODEM JUMPS: 64"),
+        )
         return bllngrr

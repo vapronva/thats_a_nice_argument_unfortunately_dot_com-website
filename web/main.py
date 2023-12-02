@@ -3,6 +3,7 @@ from ipaddress import AddressValueError, IPv4Address
 
 from flask import Flask, jsonify, render_template, request
 
+
 app = Flask("web-thats_a_nice_argument_unfortunately_dot_com")
 
 ASSETS_VERSION = os.environ.get("ASSETS_VERSION")
@@ -42,7 +43,7 @@ def error_500(e):
 
 @app.route("/")
 def main_root():
-    enableOGPreviews = not (bool(request.args.get("n") is not None))
+    enableOGPreviews = request.args.get("n") is None
     return render_template(
         "index.html",
         enableOGPreviews=enableOGPreviews,

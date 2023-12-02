@@ -2,6 +2,8 @@ stages:
   - test
   - build
   - assets-deploy
+  - post-test
+  - dast
 
 sast:
   stage: test
@@ -9,10 +11,14 @@ include:
   - template: Security/SAST.gitlab-ci.yml
   - template: Security/SAST-IaC.latest.gitlab-ci.yml
   - template: Security/Secret-Detection.gitlab-ci.yml
+  - template: Security/Dependency-Scanning.gitlab-ci.yml
+  - template: Security/Container-Scanning.gitlab-ci.yml
+  - template: DAST.gitlab-ci.yml
+  - template: BAS.latest.gitlab-ci.yml
 
 build-api:
   stage: build
-  image: docker.io/library/docker:24-git
+  image: docker.io/library/docker:git
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
@@ -21,7 +27,29 @@ build-api:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
     - docker image push --all-tags "$CI_REGISTRY_IMAGE/api"
   rules:
-    - if: $CI_COMMIT_BRANCH == "main"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      exists:
+        - api/Dockerfile
+      changes:
+        - api/**/*
+        - api/*
+        - .gitlab-ci.yml
+        - docker-compose.yml
+
+container_scanning:
+  stage: post-test
+  needs:
+    - build-api
+  variables:
+    CS_DISABLE_DEPENDENCY_LIST: "true"
+    CS_DEFAULT_BRANCH_IMAGE: $CI_REGISTRY_IMAGE/api:latest
+    CI_APPLICATION_REPOSITORY: $CI_REGISTRY_IMAGE/api
+    CI_APPLICATION_TAG: latest
+    CS_DISABLE_LANGUAGE_VULNERABILITY_SCAN: "false"
+    CS_ANALYZER_IMAGE: registry.gitlab.com/security-products/container-scanning/grype:5
+    SECURE_LOG_LEVEL: debug
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       exists:
         - api/Dockerfile
       changes:
@@ -32,7 +60,7 @@ build-api:
 
 build-web:
   stage: build
-  image: docker.io/library/docker:24-git
+  image: docker.io/library/docker:git
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
@@ -41,7 +69,7 @@ build-web:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
     - docker image push --all-tags "$CI_REGISTRY_IMAGE/web"
   rules:
-    - if: $CI_COMMIT_BRANCH == "main"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       exists:
         - web/Dockerfile
       changes:
@@ -59,16 +87,77 @@ deploy-storage:
     - apk update && apk add ca-certificates && update-ca-certificates
     - apk add --no-cache wget openssl bash
     - apk add --update --no-cache nodejs npm
-    - npm install uglifycss -g
-    - npm install uglify-js -g
+    - npm install minify -g
     - apk add --update --no-cache rclone
     - echo -e "$RCLONE_CONFIG" > rclone.conf
   script:
     - bash scripts/prepareAndPushStorage.sh
   rules:
-    - if: $CI_COMMIT_BRANCH == "main"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       changes:
         - web/**/*
         - web/*
         - .gitlab-ci.yml
         - scripts/prepareAndPushStorage.sh
+
+sonarqube-check:
+  stage: test
+  image:
+    name: docker.io/sonarsource/sonar-scanner-cli:5
+    entrypoint: [""]
+  variables:
+    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
+    GIT_DEPTH: "0"
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script:
+    - sonar-scanner
+  allow_failure: true
+  only:
+    - merge_requests
+    - master
+    - main
+    - develop
+
+sonarqube-vulnerability-report:
+  stage: test
+  dependencies:
+    - sonarqube-check
+  image: docker.io/library/alpine:latest
+  before_script:
+    - apk update
+    - apk add --no-cache curl
+  script:
+    - 'curl -u "${SONAR_TOKEN}:" "${SONAR_HOST_URL}/api/issues/gitlab_sast_export?projectKey=tnaudc_thats_a_nice_argument_unfortunately_dot_com-website_AYwnzwA6UU5pSxiXRsi4&branch=${CI_COMMIT_BRANCH}&pullRequest=${CI_MERGE_REQUEST_IID}" -o gl-sast-sonar-report.json'
+  allow_failure: true
+  only:
+    - merge_requests
+    - main
+  artifacts:
+    expire_in: 1 day
+    reports:
+      sast: gl-sast-sonar-report.json
+
+dast:
+  extends: .dast_with_bas
+  needs:
+    - deploy-storage
+  services:
+    - name: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+      alias: tnaudc-web-v1
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      changes:
+        - web/**/*
+        - web/*
+        - .gitlab-ci.yml
+        - docker-compose.yml
+        - scripts/prepareAndPushStorage.sh
+
+variables:
+  DAST_WEBSITE: "https://thats-a-nice-argument-unfortunately.com"
+  DAST_FULL_SCAN_ENABLED: "true"
+  DAST_BROWSER_SCAN: "true"
+  DAST_BAS_DISABLED: "true"
