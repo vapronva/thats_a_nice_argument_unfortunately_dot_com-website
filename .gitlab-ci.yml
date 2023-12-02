@@ -3,7 +3,6 @@ stages:
   - build
   - assets-deploy
   - post-test
-  - dast
 
 sast:
   stage: test

@@ -1,10 +1,7 @@
-from typing import TYPE_CHECKING
-
 import pydantic
 import pymongo
 
-if TYPE_CHECKING:
-    from ipaddress import IPv4Address
+from ipaddress import IPv4Address
 
 
 class IPObjectModel(pydantic.BaseModel):
