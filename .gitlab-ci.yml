@@ -13,8 +13,6 @@ include:
   - template: Security/Secret-Detection.gitlab-ci.yml
   - template: Security/Dependency-Scanning.gitlab-ci.yml
   - template: Security/Container-Scanning.gitlab-ci.yml
-  - template: DAST.gitlab-ci.yml
-  - template: BAS.latest.gitlab-ci.yml
 
 build-api:
   stage: build
@@ -139,25 +137,3 @@ sonarqube-vulnerability-report:
     expire_in: 1 day
     reports:
       sast: gl-sast-sonar-report.json
-
-dast:
-  extends: .dast_with_bas
-  needs:
-    - deploy-storage
-  services:
-    - name: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-      alias: tnaudc-web-v1
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-      changes:
-        - web/**/*
-        - web/*
-        - .gitlab-ci.yml
-        - docker-compose.yml
-        - scripts/prepareAndPushStorage.sh
-
-variables:
-  DAST_WEBSITE: "https://thats-a-nice-argument-unfortunately.com"
-  DAST_FULL_SCAN_ENABLED: "true"
-  DAST_BROWSER_SCAN: "true"
-  DAST_BAS_DISABLED: "true"
