@@ -230,11 +230,13 @@ a {
 }
 
 .h1-title-mlsn-style {
-  font-family: "Inter-Bold";
+  font-family: "Inter";
+  font-weight: 600;
 }
 
 .par-subsmall-style {
-  font-family: "Inter-Thin";
+  font-family: "Inter";
+  font-weight: 100;
   font-size: 12px;
 }
 
