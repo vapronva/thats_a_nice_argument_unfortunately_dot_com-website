@@ -1,8 +1,12 @@
+import os
 from ipaddress import IPv4Address
 
 import pydantic
 import requests
 from models import RequestException
+
+
+SKIP_PROXYCHECK = os.environ.get("SKIP_PROXYCHECK", "false").lower() == "true"
 
 
 class ProxyCheckAnswerModel(pydantic.BaseModel):
@@ -49,8 +53,10 @@ class ProxyCheckAPI:
             ProxyCheckAnswerModel: The proxy check information.
         """
         url = f"{self.baseURL}/{ip!s}?key={self.__apiKey}"
-        response = requests.get(url)
         try:
+            if SKIP_PROXYCHECK:
+                return ProxyCheckAnswerModel(ip=ip, proxy="no", type="Regular")
+            response = requests.get(url, timeout=(0.75, 2.0))
             if response.status_code == 200:
                 data = response.json()
                 return ProxyCheckAnswerModel(
@@ -62,4 +68,4 @@ class ProxyCheckAPI:
             raise RequestException(msg)
         except RequestException as e:
             print(e)
-            return ProxyCheckAnswerModel(ip=ip, proxy="no", type="Regular")
+        return ProxyCheckAnswerModel(ip=ip, proxy="no", type="Regular")
