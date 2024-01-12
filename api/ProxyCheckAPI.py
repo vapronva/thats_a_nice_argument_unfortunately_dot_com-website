@@ -31,7 +31,7 @@ class ProxyCheckAPI:
             apiKey (str): The API key.
         """
         self.__apiKey = apiKey
-        self.baseURL = "https://proxycheck.io/v2/"
+        self.baseURL = "https://proxycheck.io/v2"
 
     def getInfo(self, ip: IPv4Address) -> ProxyCheckAnswerModel:
         """Get the proxy check information for the given IP address.

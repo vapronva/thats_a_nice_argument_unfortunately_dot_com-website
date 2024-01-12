@@ -1,7 +1,7 @@
-fastapi==0.104.1
-Faker==20.1.0
+fastapi==0.109.0
+Faker==22.2.0
 requests==2.31.0
-pydantic==2.5.2
-uvicorn==0.24.0
+pydantic==2.5.3
+uvicorn==0.25.0
 pymongo==4.6.1
-sentry-sdk[fastapi]==1.38.0
+sentry-sdk[fastapi]==1.39.2

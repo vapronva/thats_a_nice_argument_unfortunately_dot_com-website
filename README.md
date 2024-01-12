@@ -1,19 +1,19 @@
 # **[thats-a-nice-argument-unfortunately.com](https://thats-a-nice-argument-unfortunately.com)** — Troll Website
 
-> *yep, that's true. i know your ip. how'd you tell? oh, maybe 'cause here's all your info and location?*
+> _yep, that's true. i know your ip. how'd you tell? oh, maybe 'cause here's all your info and location?_
 
-## Why? & History
+## Why? & Origin
 
-Saw [this meme](https://youtube.com/watch?v=wT0iWY0_-sI) on Discord one day — laughed so hard for several minutes straight.
+Saw [a particularly amusing meme](https://youtube.com/watch?v=wT0iWY0_-sI) on Discord one day, and laughed my ass off for several minutes straight.
 
-A week passed, I decided to make a website for it. Bought the domain, but never got to making it, since ~~skill issue~~ didn't have time to proprely build it. \
-After several more weeks passed, finally got to do it. In a few sprints, the website and the API were ready!
+A week lapsed... And I finally decided to make a website for it: domain was secured, yet the site's development was delayed due to a ~~skill issue~~ time constraints somewhere else. \
+Weeks evolved into months, and with a burst of determination, the website and its accompanying API materialized.
 
 But it wouldn't see the light of day until I randomly sent the link as [a reply](https://discord.com/channels/385387666415550474/755597803102928966/953044551457722388) to one of the Geoxor's message on his Discord server.
 
 ## What? & Screenshots
 
-![Example of how the website looks upon the visit](https://nf.vprw.ru/apps/files_sharing/publicpreview/PEZFq7JZps7ajaK?file=/&fileId=65921&x=1920&y=1080&a=true&etag=433379021bd0d284e4f034e31aabb6bd)
+![sneak peek of the website upon entry](./_assets/screenshot-example-mcsshadow-1.png)
 
 ## How?
 
@@ -27,7 +27,7 @@ Couldn't find the original anime artwork in the beginning of the video, so a New
 
 ### Wesbite
 
-The website is built using *Boostrap 5*. \
+The website is built using _Boostrap 5_. \
 It's pretty simple, yet very responsive.
 
 JavaScript is used minimally, though required for text animations and API requests.
@@ -43,6 +43,7 @@ It was one those projects where I tried to make everything perfect (documeneted 
 #### Third-party APIs
 
 The project utilises the following third-party APIs:
+
 1. [ipinfo.io](https://ipinfo.io)
 2. [proxycheck.io](https://proxycheck.io)
 
@@ -51,11 +52,12 @@ Because have seen those been used in production by many companies, and they offe
 
 ## Privacy Policy
 
-Eveything's [stated](https://thats-a-nice-argument-unfortunately.com/ipp#privacy-policy) on the website.
+The full [Privacy Policy](https://thats-a-nice-argument-unfortunately.com/ipp#privacy-policy) is detailed on the website.
 
-Though, the *TL;DR* would be:
-- I store your IPs
-- I send your IP to the third-party APIs which I trust
-- I store the responses from the third-party APIs
-- I log minimally
-- I collect analytics via first-party serivce
+In essence:
+
+- Your IP is logged
+- Said IP is shared with trusted third-party APIs
+- Their \[3P\] responses are stored
+- Logging is kept to the bare minimum
+- Analytics are collected exclusively in-house

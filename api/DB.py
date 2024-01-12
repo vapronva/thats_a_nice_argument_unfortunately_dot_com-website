@@ -42,7 +42,9 @@ class DB:
         -------
             list[str]: The list of nonsense information.
         """
-        self.__cll.insert_one(IPObjectModel(ip=str(ip), nni=nni).model_dump_json())
+        self.__cll.insert_one(
+            IPObjectModel(ip=str(ip), nni=nni).model_dump(mode="json")
+        )
         return nni
 
     def get_nni(self, ip: IPv4Address) -> list[str] | None:
